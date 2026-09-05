@@ -92,9 +92,9 @@ This approach reflects real-world practices where sensitive business data cannot
 
 ### 📊 Overview
 
-[![Overview](Screenshots/Screenshot%202026-09-05%20143915.png)](Screenshots/Screenshot%202026-09-05%20143915.png)
+![Overview](Screenshots/Screenshot%202026-09-05%20143915.png)
 
-👉 Click image to view full resolution
+👉 [View Full Resolution Image](Screenshots/Screenshot%202026-09-05%20143915.png)
 
 ### Plan Analysis
 [![Plan](screenshots/plan.png)](screenshots/plan.png)
