@@ -92,8 +92,7 @@ This approach reflects real-world practices where sensitive business data cannot
 
 ## 📸 Dashboard Preview
 
-### Overview
-[![Overview](screenshots/overview.png)](screenshots/overview.png)
+[![Overview](Screenshots/Screenshot%202026-09-05%20143915.png)](Screenshots/Screenshot%202026-09-05%20143915.png)
 
 ### Plan Analysis
 [![Plan](screenshots/plan.png)](screenshots/plan.png)
