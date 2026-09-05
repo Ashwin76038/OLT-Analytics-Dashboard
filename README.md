@@ -91,19 +91,16 @@ This approach reflects real-world practices where sensitive business data cannot
 ---
 
 ### 📊 Overview
+👉 [Overview](Screenshots/Screenshot%202026-09-05%20143915.png)
 
-![Overview](Screenshots/Screenshot%202026-09-05%20143915.png)
+### 📈 Plan Analysis
+👉 [Plan Analysis](Screenshots/Screenshot%202026-09-05%20143923.png)
 
-👉 [View Full Resolution Image](Screenshots/Screenshot%202026-09-05%20143915.png)
+### 🖧 OLT Analysis
+👉 [OLT Analysis](Screenshots/Screenshot%202026-09-05%20143933.png)
 
-### Plan Analysis
-[![Plan](screenshots/plan.png)](screenshots/plan.png)
-
-### OLT Analysis
-[![OLT](screenshots/olt.png)](screenshots/olt.png)
-
-### Risk Analysis
-[![Risk](screenshots/risk.png)](screenshots/risk.png)
+### ⚠️ Risk Analysis
+👉 [Risk Analysis](Screenshots/Screenshot%202026-09-05%20143943.png)
 
 ---
 
