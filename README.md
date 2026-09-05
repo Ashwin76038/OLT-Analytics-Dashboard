@@ -93,16 +93,16 @@ This approach reflects real-world practices where sensitive business data cannot
 ## 📸 Dashboard Preview
 
 ### Overview
-![Overview](screenshots/overview.png)
+[![Overview](screenshots/overview.png)](screenshots/overview.png)
 
 ### Plan Analysis
-![Plan](screenshots/plan.png)
+[![Plan](screenshots/plan.png)](screenshots/plan.png)
 
 ### OLT Analysis
-![OLT](screenshots/olt.png)
+[![OLT](screenshots/olt.png)](screenshots/olt.png)
 
 ### Risk Analysis
-![Risk](screenshots/risk.png)
+[![Risk](screenshots/risk.png)](screenshots/risk.png)
 
 ---
 
