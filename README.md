@@ -50,6 +50,14 @@ The top 2 OLTs (OLT-08, OLT-14) account for 58% of all inactive customers — me
 
 ---
 
+## Privacy-safe Power BI star schema
+
+The reusable, privacy-safe Power BI model is in [`data/powerbi_star_schema`](data/powerbi_star_schema). It contains a service-snapshot fact table, customer/OLT/plan/service-state/date dimensions, relationship instructions, and production-ready churn KPI measures.
+
+Import the six CSV files and follow [`relationships_and_model.md`](data/powerbi_star_schema/relationships_and_model.md). Create the measures in [`churn_kpi_measures.dax`](data/powerbi_star_schema/churn_kpi_measures.dax). The supplied extract has no complaint, latency, packet-loss, or downtime-duration fields, so the complaint measure intentionally stays blank.
+
+> Privacy: Do not commit raw customer extracts. The source includes direct identifiers. The star-schema files replace them with synthetic customer, service, and OLT IDs. Rebuild the PBIX from these files before publishing, because imported PBIX files can embed source rows.
+
 ## 🧠 Technical Implementation
 
 **Data Model**
