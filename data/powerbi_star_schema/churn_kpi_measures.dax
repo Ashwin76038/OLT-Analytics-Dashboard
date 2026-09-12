@@ -1,0 +1,81 @@
+// Create these measures in the 'Fact Customer Service' table.
+
+Total Customers =
+DISTINCTCOUNT ( 'Fact Customer Service'[customer_key] )
+
+Churned Customers =
+CALCULATE ( [Total Customers], 'Fact Customer Service'[churn_flag] = 1 )
+
+Churn Rate =
+DIVIDE ( [Churned Customers], [Total Customers], 0 )
+
+Active Customers =
+CALCULATE (
+    [Total Customers],
+    KEEPFILTERS ( 'Dim Service State'[service_status] = "active" )
+)
+
+Inactive Customers =
+CALCULATE (
+    [Total Customers],
+    KEEPFILTERS ( 'Dim Service State'[service_status] = "inactive" )
+)
+
+Partial Active Customers =
+CALCULATE (
+    [Total Customers],
+    KEEPFILTERS ( 'Dim Service State'[service_status] = "partial_active" )
+)
+
+High Risk Customers =
+CALCULATE (
+    [Total Customers],
+    KEEPFILTERS ( 'Dim Service State'[risk_level] = "high" )
+)
+
+High Risk Customer Rate =
+DIVIDE ( [High Risk Customers], [Total Customers], 0 )
+
+Monthly Recurring Revenue =
+SUM ( 'Fact Customer Service'[monthly_fee] )
+
+Average Monthly Fee =
+AVERAGE ( 'Fact Customer Service'[monthly_fee] )
+
+Revenue at Risk =
+CALCULATE (
+    [Monthly Recurring Revenue],
+    KEEPFILTERS ( 'Dim Service State'[risk_level] = "high" )
+)
+
+Churned Revenue =
+CALCULATE ( [Monthly Recurring Revenue], 'Fact Customer Service'[churn_flag] = 1 )
+
+Downtime-Impact Customers =
+CALCULATE (
+    [Total Customers],
+    KEEPFILTERS (
+        'Dim Service State'[network_quality_indicator]
+            IN { "degraded_service_state", "disconnected" }
+    )
+)
+
+Downtime-Impact Rate =
+DIVIDE ( [Downtime-Impact Customers], [Total Customers], 0 )
+
+Average Connections per Customer =
+DIVIDE (
+    SUM ( 'Fact Customer Service'[connection_count] ),
+    [Total Customers],
+    0
+)
+
+High Risk OLTs =
+COUNTROWS (
+    FILTER ( VALUES ( 'Dim OLT'[olt_key] ), [High Risk Customers] > 0 )
+)
+
+// Leave this blank until a complaint fact table is added. Never substitute zero.
+Average Complaints per User =
+BLANK ()
+
