@@ -427,3 +427,7 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+
+# Raw customer source files contain PII; commit only data/powerbi_star_schema.
+customers.csv
+customers_clean.xlsx
