@@ -1,0 +1,5 @@
+service_state_key,service_status,network_quality_indicator,risk_level,risk_reason
+STATE_0001,active,telemetry_not_available,low,no_observed_risk_signal
+STATE_0002,inactive,disconnected,high,disconnected_or_cancelled
+STATE_0003,partial_active,degraded_service_state,high,partial_active_service
+
