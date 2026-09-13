@@ -11,6 +11,24 @@
 *.sln.docstates
 *.env
 
+# Privacy: raw extracts, spreadsheets, local databases, and Power BI imports may
+# contain direct identifiers. Commit only reviewed files under data/powerbi_star_schema.
+/customers*.csv
+/customers*.xlsx
+/data/raw/
+/data/private/
+/data/staging/
+/Screenshots/
+/SQL Workbook results/
+*.xls
+*.xlsx
+*.parquet
+*.db
+*.sqlite*
+*.bak
+*.pbix
+!data/powerbi_star_schema/*.csv
+
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
@@ -427,7 +445,3 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
-
-# Raw customer source files contain PII; commit only data/powerbi_star_schema.
-customers.csv
-customers_clean.xlsx

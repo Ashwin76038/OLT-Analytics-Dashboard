@@ -1,81 +1,116 @@
-// Create these measures in the 'Fact Customer Service' table.
+// Production measures. Store them in a dedicated display table named '_Measures'.
+// Format rate/KPI measures as Percentage and monetary measures as INR currency.
 
 Total Customers =
 DISTINCTCOUNT ( 'Fact Customer Service'[customer_key] )
 
+Active Customers =
+VAR CustomersInScope = VALUES ( 'Fact Customer Service'[customer_key] )
+RETURN
+    COUNTROWS (
+        FILTER (
+            CustomersInScope,
+            CALCULATE (
+                COUNTROWS ( 'Fact Customer Service' ),
+                REMOVEFILTERS ( 'Dim Service State' ),
+                'Dim Service State'[is_revenue_generating] = 1
+            ) > 0
+        )
+    )
+
 Churned Customers =
-CALCULATE ( [Total Customers], 'Fact Customer Service'[churn_flag] = 1 )
+VAR CustomersInScope = VALUES ( 'Fact Customer Service'[customer_key] )
+RETURN
+    COUNTROWS (
+        FILTER (
+            CustomersInScope,
+            CALCULATE (
+                COUNTROWS ( 'Fact Customer Service' ),
+                REMOVEFILTERS ( 'Dim Service State' ),
+                'Dim Service State'[is_revenue_generating] = 1
+            ) = 0
+                && CALCULATE (
+                    COUNTROWS ( 'Fact Customer Service' ),
+                    REMOVEFILTERS ( 'Dim Service State' ),
+                    'Dim Service State'[service_status] = "inactive"
+                ) > 0
+        )
+    )
 
 Churn Rate =
-DIVIDE ( [Churned Customers], [Total Customers], 0 )
-
-Active Customers =
-CALCULATE (
-    [Total Customers],
-    KEEPFILTERS ( 'Dim Service State'[service_status] = "active" )
-)
-
-Inactive Customers =
-CALCULATE (
-    [Total Customers],
-    KEEPFILTERS ( 'Dim Service State'[service_status] = "inactive" )
-)
-
-Partial Active Customers =
-CALCULATE (
-    [Total Customers],
-    KEEPFILTERS ( 'Dim Service State'[service_status] = "partial_active" )
-)
+DIVIDE ( [Churned Customers], [Total Customers] )
 
 High Risk Customers =
 CALCULATE (
-    [Total Customers],
+    DISTINCTCOUNT ( 'Fact Customer Service'[customer_key] ),
     KEEPFILTERS ( 'Dim Service State'[risk_level] = "high" )
 )
 
-High Risk Customer Rate =
-DIVIDE ( [High Risk Customers], [Total Customers], 0 )
-
-Monthly Recurring Revenue =
-SUM ( 'Fact Customer Service'[monthly_fee] )
-
-Average Monthly Fee =
-AVERAGE ( 'Fact Customer Service'[monthly_fee] )
+Revenue (MRR) =
+CALCULATE (
+    SUM ( 'Fact Customer Service'[monthly_fee] ),
+    KEEPFILTERS ( 'Dim Service State'[is_revenue_generating] = 1 )
+)
 
 Revenue at Risk =
 CALCULATE (
-    [Monthly Recurring Revenue],
+    SUM ( 'Fact Customer Service'[monthly_fee] ),
+    KEEPFILTERS ( 'Dim Service State'[is_revenue_generating] = 1 ),
     KEEPFILTERS ( 'Dim Service State'[risk_level] = "high" )
 )
 
-Churned Revenue =
-CALCULATE ( [Monthly Recurring Revenue], 'Fact Customer Service'[churn_flag] = 1 )
+OLT Performance KPI =
+DIVIDE (
+    SUMX (
+        'Fact Customer Service',
+        RELATED ( 'Dim Service State'[olt_performance_weight] )
+    ),
+    COUNTROWS ( 'Fact Customer Service' )
+)
 
-Downtime-Impact Customers =
+Downtime Impact =
 CALCULATE (
-    [Total Customers],
+    SUM ( 'Fact Customer Service'[monthly_fee] ),
     KEEPFILTERS (
         'Dim Service State'[network_quality_indicator]
             IN { "degraded_service_state", "disconnected" }
     )
 )
 
-Downtime-Impact Rate =
-DIVIDE ( [Downtime-Impact Customers], [Total Customers], 0 )
+ARPU =
+DIVIDE ( [Revenue (MRR)], [Active Customers] )
 
-Average Connections per Customer =
-DIVIDE (
-    SUM ( 'Fact Customer Service'[connection_count] ),
-    [Total Customers],
-    0
+Invalid Activation Records =
+CALCULATE (
+    COUNTROWS ( 'Fact Customer Service' ),
+    REMOVEFILTERS ( 'Dim Date' ),
+    'Fact Customer Service'[dq_future_activation_flag] = 1
+        || 'Fact Customer Service'[dq_missing_activation_flag] = 1
 )
 
-High Risk OLTs =
-COUNTROWS (
-    FILTER ( VALUES ( 'Dim OLT'[olt_key] ), [High Risk Customers] > 0 )
+Data Quality Review Records =
+CALCULATE (
+    COUNTROWS ( 'Fact Customer Service' ),
+    REMOVEFILTERS ( 'Dim Date' ),
+    'Fact Customer Service'[data_quality_flag] = "review"
 )
 
-// Leave this blank until a complaint fact table is added. Never substitute zero.
-Average Complaints per User =
+// The supplied extract has no complaint fact or complaint-count field.
+// BLANK prevents missing observations from being presented as measured zero.
+Average Complaints per Customer =
 BLANK ()
 
+// Optional audit measure: uses the inactive raw-date relationship.
+Customers by Reported Activation Date =
+CALCULATE (
+    [Total Customers],
+    CROSSFILTER (
+        'Dim Date'[date_key],
+        'Fact Customer Service'[activation_date_key],
+        NONE
+    ),
+    USERELATIONSHIP (
+        'Dim Date'[date_key],
+        'Fact Customer Service'[reported_activation_date_key]
+    )
+)

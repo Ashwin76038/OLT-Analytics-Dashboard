@@ -1,0 +1,39 @@
+// Optional Power BI calculated-column equivalents for teams that do not import
+// the precomputed tenure and quality columns. Do not create duplicate columns.
+
+Valid Tenure Days =
+VAR ActivationKey = 'Fact Customer Service'[reported_activation_date_key]
+VAR SnapshotKey = 'Fact Customer Service'[snapshot_date_key]
+VAR ActivationDate =
+    IF (
+        NOT ISBLANK ( ActivationKey ),
+        DATE (
+            INT ( ActivationKey / 10000 ),
+            INT ( MOD ( ActivationKey, 10000 ) / 100 ),
+            MOD ( ActivationKey, 100 )
+        )
+    )
+VAR SnapshotDate =
+    DATE (
+        INT ( SnapshotKey / 10000 ),
+        INT ( MOD ( SnapshotKey, 10000 ) / 100 ),
+        MOD ( SnapshotKey, 100 )
+    )
+RETURN
+    IF (
+        ISBLANK ( ActivationDate ) || ActivationDate > SnapshotDate,
+        BLANK (),
+        DATEDIFF ( ActivationDate, SnapshotDate, DAY )
+    )
+
+Valid Tenure Months =
+VAR Days = 'Fact Customer Service'[Valid Tenure Days]
+RETURN IF ( ISBLANK ( Days ), BLANK (), INT ( DIVIDE ( Days, 30.4375 ) ) )
+
+Activation Date Quality =
+SWITCH (
+    TRUE (),
+    'Fact Customer Service'[dq_missing_activation_flag] = 1, "missing",
+    'Fact Customer Service'[dq_future_activation_flag] = 1, "future",
+    "valid"
+)
