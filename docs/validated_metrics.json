@@ -1,0 +1,23 @@
+{
+  "service_records": 1280,
+  "customer_keys": 1193,
+  "olts": 12,
+  "future_dates": 810,
+  "states": [
+    {
+      "status": "active",
+      "records": 1210,
+      "listed_fees": 3228097.0
+    },
+    {
+      "status": "inactive",
+      "records": 29,
+      "listed_fees": 45716.0
+    },
+    {
+      "status": "partial_active",
+      "records": 41,
+      "listed_fees": 54712.0
+    }
+  ]
+}

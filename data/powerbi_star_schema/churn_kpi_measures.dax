@@ -18,7 +18,7 @@ RETURN
         )
     )
 
-Churned Customers =
+Inactive-only Customers =
 VAR CustomersInScope = VALUES ( 'Fact Customer Service'[customer_key] )
 RETURN
     COUNTROWS (
@@ -37,8 +37,8 @@ RETURN
         )
     )
 
-Churn Rate =
-DIVIDE ( [Churned Customers], [Total Customers] )
+Inactive-only Customer Share =
+DIVIDE ( [Inactive-only Customers], [Total Customers] )
 
 High Risk Customers =
 CALCULATE (
@@ -46,20 +46,20 @@ CALCULATE (
     KEEPFILTERS ( 'Dim Service State'[risk_level] = "high" )
 )
 
-Revenue (MRR) =
+Listed Fee Exposure =
 CALCULATE (
     SUM ( 'Fact Customer Service'[monthly_fee] ),
     KEEPFILTERS ( 'Dim Service State'[is_revenue_generating] = 1 )
 )
 
-Revenue at Risk =
+Partial-active Listed Fees =
 CALCULATE (
     SUM ( 'Fact Customer Service'[monthly_fee] ),
     KEEPFILTERS ( 'Dim Service State'[is_revenue_generating] = 1 ),
     KEEPFILTERS ( 'Dim Service State'[risk_level] = "high" )
 )
 
-OLT Performance KPI =
+Service State Index =
 DIVIDE (
     SUMX (
         'Fact Customer Service',
@@ -68,7 +68,7 @@ DIVIDE (
     COUNTROWS ( 'Fact Customer Service' )
 )
 
-Downtime Impact =
+At-risk Listed Fees =
 CALCULATE (
     SUM ( 'Fact Customer Service'[monthly_fee] ),
     KEEPFILTERS (
@@ -77,8 +77,8 @@ CALCULATE (
     )
 )
 
-ARPU =
-DIVIDE ( [Revenue (MRR)], [Active Customers] )
+Listed Fees per Active Customer =
+DIVIDE ( [Listed Fee Exposure], [Active Customers] )
 
 Invalid Activation Records =
 CALCULATE (

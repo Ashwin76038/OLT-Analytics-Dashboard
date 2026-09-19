@@ -55,7 +55,7 @@ CREATE TABLE dbo.Fact_Customer_Service (
     snapshot_date_key int NOT NULL,
     monthly_fee decimal(12,2) NULL,
     monthly_fee_band varchar(20) NOT NULL,
-    churn_flag bit NOT NULL,
+    inactive_service_flag bit NOT NULL,
     valid_tenure_days int NULL,
     valid_tenure_months int NULL,
     dq_future_activation_flag bit NOT NULL,

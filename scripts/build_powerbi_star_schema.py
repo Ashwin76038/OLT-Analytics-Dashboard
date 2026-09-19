@@ -46,6 +46,11 @@ def build_model(source_path: Path, output_dir: Path, as_of_date: pd.Timestamp) -
     if missing:
         raise ValueError(f"Missing required source columns: {', '.join(missing)}")
 
+    if source.empty:
+        raise ValueError("Source contains no service records")
+    for key in ["customer_clean", "OLT IP", "status"]:
+        if normalized_text(source[key]).fillna("").eq("").any():
+            raise ValueError(f"Missing required identity/state field: {key}")
     output_dir.mkdir(parents=True, exist_ok=True)
 
     source["_customer_business_key"] = normalized_text(source["customer_clean"])
@@ -87,7 +92,7 @@ def build_model(source_path: Path, output_dir: Path, as_of_date: pd.Timestamp) -
         | (source["_source_connection_count"] < 1)
         | (source["_source_connection_count"] != actual_connections)
     )
-    unknown_plan_period = normalized_text(source["plan_period"]).isin(
+    unknown_plan_period = normalized_text(source["plan_period"]).fillna("unknown").isin(
         {"", "unknown", "n/a", "na", "unspecified"}
     )
 
@@ -123,7 +128,7 @@ def build_model(source_path: Path, output_dir: Path, as_of_date: pd.Timestamp) -
 
     olt_dim = source.groupby("olt_key", sort=False).agg(
         exchange_count=("exchange_code", "nunique"),
-        primary_exchange_code=("exchange_code", lambda s: s.mode().iloc[0]),
+        primary_exchange_code=("exchange_code", lambda s: s.mode().iloc[0] if not s.mode().empty else "unknown"),
     ).reset_index()
     olt_dim["multi_exchange_flag"] = (olt_dim["exchange_count"] > 1).astype("int8")
 
@@ -173,7 +178,7 @@ def build_model(source_path: Path, output_dir: Path, as_of_date: pd.Timestamp) -
     fact = source.assign(
         service_snapshot_key=[f"SERVICE_{i:06d}" for i in range(1, len(source) + 1)],
         monthly_fee=source["_monthly_fee"].where(~invalid_fee),
-        churn_flag=(source["_status"] == "inactive").astype("int8"),
+        inactive_service_flag=(source["_status"] == "inactive").astype("int8"),
     )[
         [
             "service_snapshot_key",
@@ -186,7 +191,7 @@ def build_model(source_path: Path, output_dir: Path, as_of_date: pd.Timestamp) -
             "snapshot_date_key",
             "monthly_fee",
             "monthly_fee_band",
-            "churn_flag",
+            "inactive_service_flag",
             "valid_tenure_days",
             "valid_tenure_months",
             *dq_columns,

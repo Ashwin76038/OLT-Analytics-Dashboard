@@ -16,9 +16,9 @@ The model is a periodic service snapshot. One row in `Fact Customer Service` rep
 | `activation_date_key` | Whole number, nullable | Validated activation-date FK; future/missing dates are blank |
 | `reported_activation_date_key` | Whole number, nullable | Raw reported-date FK for audit only; hide |
 | `snapshot_date_key` | Whole number | Extract-date FK; hide |
-| `monthly_fee` | Fixed decimal/currency | Service-level monthly fee |
+| `monthly_fee` | Fixed decimal/currency | Supplied service-level fee; billing-period normalization unverified |
 | `monthly_fee_band` | Text | Fee-derived segment; kept at service grain because fees vary within plan configurations |
-| `churn_flag` | Whole number | 1 only for an inactive service |
+| `inactive_service_flag` | Whole number | 1 only for an inactive service |
 | `valid_tenure_days` | Whole number, nullable | Days from valid activation date to extract date |
 | `valid_tenure_months` | Whole number, nullable | Completed 30.4375-day months; use for bands, not billing |
 | `dq_*_flag` | Whole number | Row-level quality flags (0/1) |
@@ -42,7 +42,7 @@ Primary key: `service_state_key`. Columns: `service_status`, `is_revenue_generat
 
 ### Dim Date
 
-Primary key: `date_key`. Columns: `date`, `year`, `quarter`, `month_number`, `month_name`, `year_month`, `week_start`, `is_future_at_extract`. Mark this table as the date table using `Dim Date[date]`; sort `month_name` by `month_number` and `year_month` by `date_key` or a dedicated month-start column.
+Primary key: `date_key`. Columns: `date`, `year`, `quarter`, `month_number`, `month_name`, `year_month`, `week_start`, `is_future_at_extract`. Mark this table as the date table using `Dim Date[date]`; sort `month_name` by `month_number` and `year_month` by a dedicated year-month number (year * 100 + month_number).
 
 ## Relationships
 

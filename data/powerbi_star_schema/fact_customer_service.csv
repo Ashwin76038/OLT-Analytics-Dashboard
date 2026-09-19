@@ -1,4 +1,4 @@
-service_snapshot_key,customer_key,olt_key,plan_key,service_state_key,activation_date_key,reported_activation_date_key,snapshot_date_key,monthly_fee,monthly_fee_band,churn_flag,valid_tenure_days,valid_tenure_months,dq_future_activation_flag,dq_missing_activation_flag,dq_invalid_fee_flag,dq_connection_count_flag,dq_unknown_plan_period_flag,data_quality_flag
+service_snapshot_key,customer_key,olt_key,plan_key,service_state_key,activation_date_key,reported_activation_date_key,snapshot_date_key,monthly_fee,monthly_fee_band,inactive_service_flag,valid_tenure_days,valid_tenure_months,dq_future_activation_flag,dq_missing_activation_flag,dq_invalid_fee_flag,dq_connection_count_flag,dq_unknown_plan_period_flag,data_quality_flag
 SERVICE_000001,CUST_0001,OLT_0001,PLAN_0001,STATE_0001,20260108,20260108,20260912,599.0,medium,0,247,8,0,0,0,0,1,review
 SERVICE_000002,CUST_0002,OLT_0001,PLAN_0002,STATE_0001,20250820,20250820,20260912,199.0,low,0,388,12,0,0,0,0,0,valid
 SERVICE_000003,CUST_0003,OLT_0001,PLAN_0003,STATE_0001,20260814,20260814,20260912,0.0,low,0,29,0,0,0,0,0,0,valid

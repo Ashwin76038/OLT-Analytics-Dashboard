@@ -1,78 +1,79 @@
-# OLT Analytics Dashboard
+# Telecom OLT Service Analytics
 
-A privacy-safe telecom/ISP analytics project for monitoring service status, churn risk, commercial plan mix, and OLT-level customer impact in Power BI.
+Analyze service activity and plan exposure to prioritize ISP operational review.
 
-## Business problem
+![Public-data analytical overview](images/01-service-overview.png)
 
-Operations and retention teams need to identify where inactive and partial-active services are concentrated, estimate recurring revenue at risk, and prioritize interventions by OLT, plan, and customer segment.
+*Reproducible Python figure; Power BI refresh remains pending.*
 
-## Privacy and source data
+## Executive summary
 
-Do not commit or publish raw customer extracts. The original source includes direct identifiers such as names, mobile numbers, email addresses, physical addresses, service numbers, staff names, and private OLT IP addresses.
+The published snapshot contains **1,280 service records**, **1,193 customer keys**, and **12 OLTs**. It supports service-status monitoring and data-quality investigation. It does not measure historical churn or physical network utilization.
 
-The files in [`data/powerbi_star_schema`](data/powerbi_star_schema) are privacy-safe. Direct identifiers have been removed and relationship keys are synthetic. The current `OLT Dashboard.pbix` must be rebuilt from these safe tables before publishing because Power BI files may embed imported source rows. The PBIX is ignored for future commits; if a sensitive version was previously pushed, remove it from Git history before making the repository public.
+## Business questions
 
-## Rebuild the safe model
+- Where are partial-active and inactive services concentrated?
+- How does service status vary by plan and OLT?
+- Which date records cannot support tenure analysis?
+- Which OLT status rates warrant investigation?
 
-From the repository root, with the ignored source extract available locally:
+## Verified findings
 
-```powershell
-python scripts/build_powerbi_star_schema.py --source customers.csv --as-of-date 2026-09-12
+| Finding | Evidence | Operational action |
+|---|---|---|
+| Most services are active | 1,210 / 1,280 (94.53%) | Monitor status changes in later snapshots |
+| 70 service records need status review | 41 partial-active, 29 inactive | Reconcile service status with support and billing records |
+| Tenure has substantial missing coverage | 810 / 1,280 reported activation dates fall after the supplied snapshot date | Resolve source date semantics before cohort analysis |
+| Service rows differ from customers | 1,280 records versus 1,193 normalized customer keys | Use service denominators for status shares and distinct keys for customer counts |
+
+Recompute these values with `python scripts/analyze_public.py`; evidence is saved in [validated_metrics.json](docs/validated_metrics.json).
+
+## Dataset and privacy
+
+The supplied operational-style extract has been transformed into public surrogate-key tables. Independent provenance and customer identity matching remain unverified. Public datasets included in this repository have been sanitized to remove direct customer identifiers. This does not guarantee protection against external linkage.
+
+Legacy screenshots, SQL exports and the unrelated sample workbook were removed from the current tree and preserved privately for review. Earlier Git history may retain them. A refreshed privacy-reviewed Power BI screenshot is still needed; no old image is presented as the current model.
+
+## Tools and model
+
+Python, pandas, NumPy, SQL and Power BI DAX. One service snapshot fact joins customer, OLT, plan, service-state and date dimensions using one-to-many, single-direction relationships. See [model and field definitions](data/powerbi_star_schema/relationships_and_model.md), [data dictionary](docs/data_dictionary.md), and [methodology](docs/methodology.md).
+
+## KPI definitions
+
+| KPI | Formula | Interpretation |
+|---|---|---|
+| Service records | Row count | Snapshot service observations |
+| Customer keys | Distinct customer_key | Grouped source labels; not independently verified people |
+| Active service share | Active rows / all service rows | Status composition |
+| Inactive-only customer share | Customers with no active/partial service and at least one inactive service / customers in context | Snapshot inactivity, not churn |
+| Listed fee exposure | Sum of listed fees on active/partial services | Not verified MRR or collections |
+| Partial-active listed fees | Sum of fees on partial-active records | Potential exposure, not demonstrated loss |
+| Service-state index | Mean of status weights 1 / 0.5 / 0 | Operational status proxy, not telemetry |
+
+## Reproduce
+
+```bash
+python -m pip install -r requirements.txt
+python -m unittest discover -s tests -v
+python scripts/render_overview.py
+python scripts/analyze_public.py
 python anomaly_detection.py
-python -m unittest tests.test_star_schema -v
 ```
 
-The build creates 1,280 service-snapshot rows for 1,193 distinct customers. It quarantines 810 future activation dates: the reported date remains available for audit, while the active validated date key and tenure fields stay blank for those rows.
+Optional private-source rebuild: `python scripts/build_powerbi_star_schema.py --source customers.csv --as-of-date 2026-09-12`. Never commit the private source. Public analysis works without it.
 
-## Power BI model
+For Power BI, import the six model CSVs and follow the relationship guide. The legacy filename [churn_kpi_measures.dax](data/powerbi_star_schema/churn_kpi_measures.dax) now contains status-based measure names. SQL Server DDL is in `sql/`; the SQLite evidence script is executable without a server.
 
-Import all CSV files in `data/powerbi_star_schema` and rename the tables as follows:
+## Limitations and next steps
 
-| CSV | Power BI table |
-|---|---|
-| `fact_customer_service.csv` | `Fact Customer Service` |
-| `dim_customer.csv` | `Dim Customer` |
-| `dim_olt.csv` | `Dim OLT` |
-| `dim_plan.csv` | `Dim Plan` |
-| `dim_service_state.csv` | `Dim Service State` |
-| `dim_date.csv` | `Dim Date` |
+Verify source authenticity, billing periods and customer grouping; repair activation dates; obtain cancellation events and interval network telemetry; then refresh a reviewed Power BI report. No causal, churn-prediction or revenue-impact claim is supported.
 
-Create one-to-many, single-direction relationships from each dimension to `Fact Customer Service`. The validated activation-date relationship is active; reported activation date and snapshot date are inactive. Exact keys, columns, types, and model constraints are documented in [`relationships_and_model.md`](data/powerbi_star_schema/relationships_and_model.md).
+## Repository structure
 
-## Measures
+- `data/powerbi_star_schema/`: public model tables and DAX
+- `scripts/`: private-source ETL and public SQL evidence
+- `sql/`: SQL Server schema
+- `tests/`: relationship, privacy and date checks
+- `docs/`: methodology, dictionary and verified metrics
 
-Create the measures in [`churn_kpi_measures.dax`](data/powerbi_star_schema/churn_kpi_measures.dax). They include:
-
-- Total, active, churned, and high-risk customers
-- Churn rate, revenue (MRR), revenue at risk, and ARPU
-- OLT performance and downtime-impact proxies
-- Invalid activation and overall data-quality review counts
-
-The supplied extract has no complaint, latency, packet-loss, or downtime-duration records. The complaint metric intentionally stays blank rather than showing a misleading zero. OLT performance and downtime impact are service-state proxies until network-event telemetry is added.
-
-## Data quality caveat
-
-The generated fact contains validated tenure, a quarantined reported-date key, and flags for future/missing activation dates, invalid fees, inconsistent connection counts, and unknown plan periods. Do not replace invalid dates with the extract date because that would create false activation events.
-
-## Recommended report pages
-
-1. **Executive Summary** — customer base, churn rate, MRR, revenue at risk, ARPU, and a data-quality warning.
-2. **Churn Analysis** — churn and risk by plan, monthly-fee band, customer type, OLT, and valid tenure.
-3. **OLT Performance** — service-state mix, OLT performance proxy, high-risk customers, and downtime-impact proxy.
-4. **Customer Segmentation** — customer type, connection count, plan, monthly-fee band, tenure, and risk.
-
-The detailed visual, KPI, and slicer specification is in [`dashboard_blueprint.md`](data/powerbi_star_schema/dashboard_blueprint.md).
-
-## GitHub update plan
-
-Commit the privacy-safe model CSVs, DAX, model documentation, dashboard blueprint, SQL DDL, ETL script, anomaly script, README, and `.gitignore`. Do not commit raw extracts, spreadsheets, local databases, or PBIX files until the PBIX has been rebuilt exclusively from reviewed safe inputs. Review screenshots for identifiers before committing them.
-
-## Project structure
-
-```text
-data/powerbi_star_schema/  Reviewed fact/dimension CSVs, DAX, and implementation guides
-scripts/                   Reproducible privacy-safe model build
-sql/                       SQL Server reference DDL and constraints
-anomaly_detection.py       Privacy-safe OLT anomaly analysis
-Screenshots/               Dashboard screenshots; review before publishing
-```
+Skills demonstrated: data cleaning, grain validation, dimensional modeling, SQL aggregation, DAX design and operational analysis.
