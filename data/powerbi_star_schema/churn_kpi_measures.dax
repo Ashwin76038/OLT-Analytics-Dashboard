@@ -1,5 +1,6 @@
-// Production measures. Store them in a dedicated display table named '_Measures'.
-// Format rate/KPI measures as Percentage and monetary measures as INR currency.
+// Candidate measures; validate in Power BI Desktop before publication.
+// Store in '_Measures'. Format ratios as Percentage. Listed fees are unverified
+// amounts; confirm currency and billing periods before applying currency formatting.
 
 Total Customers =
 DISTINCTCOUNT ( 'Fact Customer Service'[customer_key] )
