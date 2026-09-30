@@ -28,9 +28,13 @@ The published snapshot contains **1,280 service records**, **1,193 customer keys
 
 Recompute these values with `python scripts/analyze_public.py`; evidence is saved in [validated_metrics.json](docs/validated_metrics.json).
 
+The independent [public audit receipt](docs/public_audit.json) adds KPI-denominator and quality checks: **810/1,280 (63.28%)** reported activations are future-dated, **816/1,280 (63.75%)** service rows require some quality review, and **58** rows have an unknown plan period. Of the 1,193 grouped customer keys, **22** are inactive-only under the documented snapshot rule. These are review leads, not evidence of churn. See the [quality review](docs/public_quality_review.md).
+
 ## Dataset and privacy
 
 The supplied operational-style extract has been transformed into public surrogate-key tables. Independent provenance and customer identity matching remain unverified. Public datasets included in this repository have been sanitized to remove direct customer identifiers. This does not guarantee protection against external linkage.
+
+The current sequential customer keys are stable only within this frozen build. They must not be joined to independently generated snapshots. The [source and future-key contract](docs/source_and_key_contract.md) explains what evidence and privacy controls are needed before longitudinal analysis. The private source extract is absent, so a fresh clone can reproduce the public audit but not the original private-source ETL.
 
 Legacy screenshots, SQL exports and the unrelated sample workbook were removed from the current tree and preserved privately for review. Earlier Git history may retain them. A refreshed privacy-reviewed Power BI screenshot is still needed; no old image is presented as the current model.
 
@@ -57,12 +61,15 @@ python -m pip install -r requirements.txt
 python -m unittest discover -s tests -v
 python scripts/render_overview.py
 python scripts/analyze_public.py
+python scripts/audit_public.py
 python anomaly_detection.py
 ```
 
 Optional private-source rebuild: `python scripts/build_powerbi_star_schema.py --source customers.csv --as-of-date 2026-09-12`. Never commit the private source. Public analysis works without it.
 
 For Power BI, import the six model CSVs and follow the relationship guide. The legacy filename [churn_kpi_measures.dax](data/powerbi_star_schema/churn_kpi_measures.dax) now contains status-based measure names. SQL Server DDL is in `sql/`; the SQLite evidence script is executable without a server.
+
+**Power BI status:** the committed files are import-ready data, model guidance and candidate DAX. A privacy-reviewed current Desktop report, DAX execution/reconciliation and tested slicer behavior remain pending. The Python/SQLite audit does not claim to validate Power BI execution.
 
 ## Limitations and next steps
 

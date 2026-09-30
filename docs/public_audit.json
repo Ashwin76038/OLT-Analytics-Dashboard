@@ -1,0 +1,34 @@
+{
+  "active_or_partial_customer_keys": 1171,
+  "active_service_share": 0.9453125,
+  "customer_keys": 1193,
+  "future_activation_records": 810,
+  "future_activation_share": 0.6328125,
+  "future_by_status": {
+    "active": 772,
+    "inactive": 16,
+    "partial_active": 22
+  },
+  "inactive_only_customer_keys": 22,
+  "independent_sql_reconciliation": "passed for headline counts and service statuses",
+  "listed_fee_exposure_unverified_units": 3282809.0,
+  "olt_groups": 12,
+  "partial_active_listed_fees_unverified_units": 54712.0,
+  "plan_period_categories": 9,
+  "power_bi_execution": "not verified by this Python/SQLite audit",
+  "reported_activation_max_key": 20281130,
+  "reported_activation_min_key": 20250604,
+  "review_records": 816,
+  "review_share": 0.6375,
+  "scope": "committed public service snapshot; source authenticity unresolved",
+  "service_records": 1280,
+  "service_state_index_status_proxy": 0.961328125,
+  "service_status_records": {
+    "active": 1210,
+    "inactive": 29,
+    "partial_active": 41
+  },
+  "snapshot_date_key": 20260912,
+  "unknown_plan_period_records": 58,
+  "valid_tenure_records": 470
+}
