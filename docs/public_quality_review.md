@@ -2,6 +2,8 @@
 
 Run `python scripts/audit_public.py --output docs/public_audit.json` to reproduce the aggregate receipt. It reads only the six committed sanitized tables and independently reconciles headline counts with SQLite. The existing star-schema tests and new audit tests cover keys, foreign keys, future-date exclusions, review counts and important KPI denominators.
 
+**Source reconciliation update, 1 October 2026:** the author supplied the original workbook and clarified Activation Date as service activation. The original selected rows contain zero dates after the configured cutoff, whereas 1,275 public dates differ from source. The table below describes the still-uncorrected public model; the 810 future values must not be attributed to the original workbook. See [source review](source_workbook_review.md).
+
 | Finding | Current evidence | Decision risk | Action |
 |---|---:|---|---|
 | Future reported activation | 810/1,280 service rows (63.28%); 772 active, 22 partial-active, 16 inactive | Tenure/cohort results would be invalid if these dates were used | Retain source date for audit; exclude from validated activation/tenure until source meaning is confirmed |
@@ -29,4 +31,4 @@ The three strongest findings are the future-date quarantine, the service/custome
 
 ### Resume-safe project story
 
-“I modeled a telecom service snapshot into a privacy-safe star schema and built checks that distinguish 1,280 services from 1,193 grouped customer keys. I found that 810 reported activation dates occur after the extract, so I quarantined them from tenure calculations. I can describe service-status and listed-fee exposure, but I do not claim observed churn, verified revenue or a refreshed Power BI dashboard yet.”
+“I modeled a telecom service snapshot and built checks that distinguish 1,280 services from 1,193 grouped customer keys. After obtaining the original workbook, I reconciled the scoped rows on fees, plans and grouping and found 1,275 public activation dates differed from source. I retained the public-data quality flags and stopped tenure/cohort claims pending a documented, privacy-reviewed correction and Power BI refresh.”

@@ -2,7 +2,7 @@
 
 The committed model contains one service record per snapshot row, not one unique person. Customer keys group normalized source customer labels; there is no independent identity registry to validate name collisions. Keys are scoped to this build, not stable across reordered extracts. Do not append independently keyed snapshots.
 
-The supplied snapshot date is 2026-09-12. Future activation dates remain in the audit field and are excluded from valid tenure. This is a snapshot study: inactive is a service status, not observed cancellation or a churn event. No predictive validation is available.
+The model's configured snapshot date is 2026-09-12; the original export's actual snapshot date remains unconfirmed. Future public activation dates remain in the audit field and are excluded from valid tenure. The author confirms Activation Date means service activation. A private source comparison found zero original dates after the cutoff but 1,275 public dates differing from source; public tenure/cohort outputs therefore remain unsuitable for source-backed claims until reviewed restoration. See [source review](source_workbook_review.md). This is a snapshot study: inactive is a service status, not observed cancellation or a churn event. No predictive validation is available.
 
 Listed fees are summed at service grain. Billing period/currency normalization and collections are unverified; therefore these totals are fee exposure, not recognized revenue or verified MRR. Partial-active fees indicate exposure, not demonstrated loss.
 

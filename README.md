@@ -30,11 +30,13 @@ Recompute these values with `python scripts/analyze_public.py`; evidence is save
 
 The independent [public audit receipt](docs/public_audit.json) adds KPI-denominator and quality checks: **810/1,280 (63.28%)** reported activations are future-dated, **816/1,280 (63.75%)** service rows require some quality review, and **58** rows have an unknown plan period. Of the 1,193 grouped customer keys, **22** are inactive-only under the documented snapshot rule. These are review leads, not evidence of churn. See the [quality review](docs/public_quality_review.md).
 
+**Original-source correction:** the project author supplied the original workbook privately on 1 October 2026 and confirmed that Activation Date means internet-service activation. Its 1,280 Combo-service rows match the public fees/plans/status grouping, but **1,275 public dates differ**: the source has **zero** dates after the configured cutoff, versus **810** in the public model. These are public-data discrepancies, not established defects in the original dates. See the [source review](docs/source_workbook_review.md) and [aggregate receipt](docs/source_workbook_receipt.json). The public data and Power BI inputs have not yet been corrected.
+
 ## Dataset and privacy
 
 The supplied operational-style extract has been transformed into public surrogate-key tables. Independent provenance and customer identity matching remain unverified. Public datasets included in this repository have been sanitized to remove direct customer identifiers. This does not guarantee protection against external linkage.
 
-The current sequential customer keys are stable only within this frozen build. They must not be joined to independently generated snapshots. The [source and future-key contract](docs/source_and_key_contract.md) explains what evidence and privacy controls are needed before longitudinal analysis. The private source extract is absent, so a fresh clone can reproduce the public audit but not the original private-source ETL.
+The current sequential customer keys are stable only within this frozen build. They must not be joined to independently generated snapshots. The [source and future-key contract](docs/source_and_key_contract.md) explains what evidence and privacy controls are needed before longitudinal analysis. The original workbook is available privately for reconciliation and intentionally excluded from Git; a fresh public clone can reproduce the public audit but not the original private-source ETL.
 
 Legacy screenshots, SQL exports and the unrelated sample workbook were removed from the current tree and preserved privately for review. Earlier Git history may retain them. A refreshed privacy-reviewed Power BI screenshot is still needed; no old image is presented as the current model.
 
@@ -73,7 +75,7 @@ For Power BI, import the six model CSVs and follow the relationship guide. The l
 
 ## Limitations and next steps
 
-Verify source authenticity, billing periods and customer grouping; repair activation dates; obtain cancellation events and interval network telemetry; then refresh a reviewed Power BI report. No causal, churn-prediction or revenue-impact claim is supported.
+Confirm the source snapshot date, billing units and status-code meanings; reconcile all public activation dates with the supplied original workbook; then refresh a reviewed Power BI report. Obtain cancellation events and interval telemetry if churn/network claims are intended. No causal, churn-prediction or revenue-impact claim is supported.
 
 ## Repository structure
 

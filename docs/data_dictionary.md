@@ -36,9 +36,9 @@ See the [model definitions](../data/powerbi_star_schema/relationships_and_model.
 | fact_customer_service | olt_key | object | Build-scoped surrogate key |
 | fact_customer_service | plan_key | object | Build-scoped surrogate key |
 | fact_customer_service | service_state_key | object | Build-scoped surrogate key |
-| fact_customer_service | activation_date_key | float64 | Build-scoped surrogate key |
-| fact_customer_service | reported_activation_date_key | int64 | Build-scoped surrogate key |
-| fact_customer_service | snapshot_date_key | int64 | Build-scoped surrogate key |
+| fact_customer_service | activation_date_key | nullable YYYYMMDD | Current public activation date excluding future/missing values; requires original-source reconciliation before tenure/cohort claims |
+| fact_customer_service | reported_activation_date_key | YYYYMMDD | Date preserved from prepared public build; 1,275 values differ from original author-supplied Activation Date, defined as service activation |
+| fact_customer_service | snapshot_date_key | YYYYMMDD | Configured model cutoff 20260912; actual source snapshot date unconfirmed |
 | fact_customer_service | monthly_fee | float64 | ETL output; see build_powerbi_star_schema.py and model definitions |
 | fact_customer_service | monthly_fee_band | object | ETL output; see build_powerbi_star_schema.py and model definitions |
 | fact_customer_service | inactive_service_flag | int64 | ETL output; see build_powerbi_star_schema.py and model definitions |
