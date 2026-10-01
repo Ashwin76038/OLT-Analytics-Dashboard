@@ -2,7 +2,7 @@
 
 ## What the committed extract proves
 
-The public model contains one row per **service in one 12 September 2026 snapshot**. It has 1,280 service rows, 1,193 build-scoped grouped customer keys and 12 OLT groups. These are not independently verified people, cancellations or physical network measurements. `scripts/audit_public.py` reproduces the aggregate evidence without reading the private source.
+The public model contains one row per **service in one model snapshot configured for 12 September 2026**. It has 1,280 service rows, 1,193 build-scoped grouped customer keys and 12 OLT groups. These are not independently verified people, cancellations or physical network measurements. `scripts/audit_public.py` reproduces the aggregate evidence without reading the private source.
 
 The published sample **is present in this repository**: six CSVs under `data/powerbi_star_schema/` (the 1,280-row service fact and five dimensions), plus a 12-row OLT anomaly output. The audit and tests read those committed files. The project author supplied the original customer workbook privately on 1 October 2026; it is intentionally not distributed. See [source reconciliation](source_workbook_review.md).
 

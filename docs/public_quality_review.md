@@ -6,7 +6,7 @@ Run `python scripts/audit_public.py --output docs/public_audit.json` to reproduc
 
 | Finding | Current evidence | Decision risk | Action |
 |---|---:|---|---|
-| Future reported activation | 810/1,280 service rows (63.28%); 772 active, 22 partial-active, 16 inactive | Tenure/cohort results would be invalid if these dates were used | Retain source date for audit; exclude from validated activation/tenure until source meaning is confirmed |
+| Future public activation | 810/1,280 service rows (63.28%); 772 active, 22 partial-active, 16 inactive | Tenure/cohort results would be invalid if these dates were used | Retain current public dates for audit; reconcile all activation values with the original workbook before tenure/cohort claims |
 | Other quality flags | 816/1,280 review rows (63.75%); 58 rows have unknown plan period, with overlap with future-date rows | Missing period prevents interpreting fee cadence | Resolve period definitions upstream; do not convert listed fees to MRR |
 | Grain/identity | 1,280 service rows versus 1,193 grouped customer keys; 22 inactive-only keys | Service shares and customer shares need different denominators; keys are not verified people | Label every KPI by grain; require stable source IDs before multi-snapshot claims |
 | Status mix | 1,210 active, 41 partial-active, 29 inactive | Status is not observed churn or network telemetry | Use status review language, not churn/performance outcomes |
@@ -27,7 +27,7 @@ The receipt validates public data structure and aggregate calculations, not the 
 | Automated tests | 5 passing baseline tests | 8 passing tests, including duplicate-key rejection and future-date regression |
 | Power BI | Candidate DAX/model guidance, no validated Desktop report | Unchanged; Desktop relationships, measures, filters and visuals remain unverified |
 
-The three strongest findings are the future-date quarantine, the service/customer grain difference, and the separation of status-based fee exposure from actual churn or revenue. This is a stronger **data-modeling and quality** portfolio case, but it does **not yet meet a defensible 4/5 BI-project rating**: the source date meaning and billing units are unresolved, and a current privacy-reviewed Desktop report has not been validated.
+The three strongest findings are the source/public date discrepancy, the service/customer grain difference, and the separation of status-based fee exposure from actual churn or revenue. This is a stronger **data-modeling and quality** portfolio case, but it does **not yet meet a defensible 4/5 BI-project rating**: the original-to-public date transformation, actual snapshot date and billing units are unresolved, and a current privacy-reviewed Desktop report has not been validated.
 
 ### Resume-safe project story
 

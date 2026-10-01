@@ -23,7 +23,7 @@ The published snapshot contains **1,280 service records**, **1,193 customer keys
 |---|---|---|
 | Most services are active | 1,210 / 1,280 (94.53%) | Monitor status changes in later snapshots |
 | 70 service records need status review | 41 partial-active, 29 inactive | Reconcile service status with support and billing records |
-| Tenure has substantial missing coverage | 810 / 1,280 reported activation dates fall after the supplied snapshot date | Resolve source date semantics before cohort analysis |
+| Public activation dates need reconciliation | 810 / 1,280 public activation dates fall after the configured cutoff; 1,275 differ from original source | Restore reviewed source dates and confirm the actual snapshot before cohort analysis |
 | Service rows differ from customers | 1,280 records versus 1,193 normalized customer keys | Use service denominators for status shares and distinct keys for customer counts |
 
 Recompute these values with `python scripts/analyze_public.py`; evidence is saved in [validated_metrics.json](docs/validated_metrics.json).
