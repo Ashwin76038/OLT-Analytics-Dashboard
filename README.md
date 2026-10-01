@@ -8,7 +8,7 @@ Analyze service activity and plan exposure to prioritize ISP operational review.
 
 ## Executive summary
 
-The published snapshot contains **1,280 service records**, **1,193 customer keys**, and **12 OLTs**. It supports service-status monitoring and data-quality investigation. It does not measure historical churn or physical network utilization.
+The published snapshot contains **1,280 service records**, **1,193 customer keys**, and **12 grouped OLT-address keys**. Those address groups are not a verified physical device inventory. It supports service-status monitoring and data-quality investigation. It does not measure historical churn or physical network utilization.
 
 ## Business questions
 
@@ -34,7 +34,7 @@ The independent [public audit receipt](docs/public_audit.json) adds KPI-denomina
 
 ## Dataset and privacy
 
-The supplied operational-style extract has been transformed into public surrogate-key tables. Independent provenance and customer identity matching remain unverified. Public datasets included in this repository have been sanitized to remove direct customer identifiers. This does not guarantee protection against external linkage.
+The author identifies the supplied original workbook as a confidential government-platform customer export. It was transformed into public surrogate-key tables. Portal/billing documentation will not be requested or published; source-status mappings and the analysis reference date remain explicit assumptions. Public tables remove direct customer identifiers, but that does not guarantee protection against external linkage.
 
 The current sequential customer keys are stable only within this frozen build. They must not be joined to independently generated snapshots. The [source and future-key contract](docs/source_and_key_contract.md) explains what evidence and privacy controls are needed before longitudinal analysis. The original workbook is available privately for reconciliation and intentionally excluded from Git; a fresh public clone can reproduce the public audit but not the original private-source ETL.
 
@@ -42,7 +42,7 @@ Legacy screenshots, SQL exports and the unrelated sample workbook were removed f
 
 ## Tools and model
 
-Python, pandas, NumPy, SQL and Power BI DAX. One service snapshot fact joins customer, OLT, plan, service-state and date dimensions using one-to-many, single-direction relationships. See [model and field definitions](data/powerbi_star_schema/relationships_and_model.md), [data dictionary](docs/data_dictionary.md), and [methodology](docs/methodology.md).
+Python, pandas, NumPy, MySQL (the author's project SQL engine) and Power BI DAX. One service snapshot fact joins customer, OLT, plan, service-state and date dimensions using one-to-many, single-direction relationships. See [model and field definitions](data/powerbi_star_schema/relationships_and_model.md), [data dictionary](docs/data_dictionary.md), and [methodology](docs/methodology.md).
 
 ## KPI definitions
 
@@ -56,6 +56,8 @@ Python, pandas, NumPy, SQL and Power BI DAX. One service snapshot fact joins cus
 | Partial-active listed fees | Sum of fees on partial-active records | Potential exposure, not demonstrated loss |
 | Service-state index | Mean of status weights 1 / 0.5 / 0 | Operational status proxy, not telemetry |
 
+The author confirms that listed plan amounts relate to the supplied plan periods. Report them **within each period**: 1,188 monthly plans, six annual plans, other stated periods and 58 unspecified rows. Run `python scripts/analyze_plan_periods.py` for independently reconciled counts and amounts; see the [period review](docs/plan_period_review.md) and [receipt](docs/plan_period_receipt.json). Currency is undisclosed. The legacy `monthly_fee` field is a source amount and must not become an MRR headline for mixed periods.
+
 ## Reproduce
 
 ```bash
@@ -64,18 +66,19 @@ python -m unittest discover -s tests -v
 python scripts/render_overview.py
 python scripts/analyze_public.py
 python scripts/audit_public.py
+python scripts/analyze_plan_periods.py
 python anomaly_detection.py
 ```
 
 Optional private-source rebuild: `python scripts/build_powerbi_star_schema.py --source customers.csv --as-of-date 2026-09-12`. Never commit the private source. Public analysis works without it.
 
-For Power BI, import the six model CSVs and follow the relationship guide. The legacy filename [churn_kpi_measures.dax](data/powerbi_star_schema/churn_kpi_measures.dax) now contains status-based measure names. SQL Server DDL is in `sql/`; the SQLite evidence script is executable without a server.
+For Power BI, import the six model CSVs and follow the relationship guide. The legacy filename [churn_kpi_measures.dax](data/powerbi_star_schema/churn_kpi_measures.dax) now contains status-based measure names. The existing `sql/` DDL is a SQL Server reference artifact, not an executable MySQL script. SQLite was used only for additional independent audit checks; native MySQL execution has not been verified in this review. See [SQL engine notes](docs/sql_engine_notes.md).
 
 **Power BI status:** the committed files are import-ready data, model guidance and candidate DAX. A privacy-reviewed current Desktop report, DAX execution/reconciliation and tested slicer behavior remain pending. The Python/SQLite audit does not claim to validate Power BI execution.
 
 ## Limitations and next steps
 
-Confirm the source snapshot date, billing units and status-code meanings; reconcile all public activation dates with the supplied original workbook; then refresh a reviewed Power BI report. Obtain cancellation events and interval telemetry if churn/network claims are intended. No causal, churn-prediction or revenue-impact claim is supported.
+Reconcile public activation dates with the original workbook, retain disclosed assumptions where portal definitions/reference dates are confidential, report listed amounts by their periods, and refresh a reviewed Power BI report. Cancellation events or interval telemetry would be needed only for stronger churn/network claims. No measured business impact is established.
 
 ## Repository structure
 

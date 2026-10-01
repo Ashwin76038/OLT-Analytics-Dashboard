@@ -1,6 +1,6 @@
 # Original workbook reconciliation
 
-On 1 October 2026, the project author supplied the original customer/service workbook privately and confirmed that **Activation Date means the date the customer's internet plan/service was activated**. This resolves the intended field meaning. The workbook's operational collection process, actual snapshot date, fee currency/period and status-code definitions still require confirmation.
+On 1 October 2026, the project author supplied the original customer/service workbook privately and confirmed that **Activation Date means the date the customer's internet plan/service was activated**. The author identifies a confidential government-platform export and confirms that amounts should be read with their listed plan periods. Portal/billing documents will not be requested or published. Currency, actual snapshot date and A/D/E business definitions remain undisclosed; reference dates and status mappings are analytical assumptions.
 
 ## Source scope and comparison
 
@@ -15,7 +15,7 @@ The workbook contains 1,320 service rows. Filtering `Sub Service Type = BHARAT F
 
 Both projects' public activation-date sequences are identical. The original workbook supports the date discrepancy, but **does not identify the transformation that caused it**. The currently committed builder only consumes an already prepared customer CSV; the original-to-prepared transformation is not documented. Do not attribute the 810 future public dates to the original source or automatically reinterpret them as renewal/expiry dates.
 
-The comparison is corroborated by row order and other fields, not a verified stable service-ID join. The source codes A/D/E match the existing active/partial-active/inactive mapping in all rows, but this numerical match does not establish the business meaning of those codes.
+The comparison is corroborated by row order and other fields, not a verified stable service-ID join. The source codes A/D/E match the existing active/partial-active/inactive mapping in all rows, but this numerical match does not establish their business meaning. The source's 12 distinct address groups do not verify a physical OLT inventory; the author selected ten different OLT IDs for the separate Excel usage simulation.
 
 ## Reproduce privately
 
@@ -26,10 +26,10 @@ python scripts/reconcile_source_workbook.py --source /private/path/original.xlsx
 
 The script reads the workbook in memory and emits aggregates only. An optional `--output docs/source_workbook_receipt.json` saves the aggregate receipt. It never modifies the source, public data, keys or Power BI files. A public clone without the private workbook can run public tests/audits, but cannot rerun this private-source comparison.
 
-Executed: the original-workbook comparison above and 11/11 unit tests passed, including explicit day-first parsing, invalid-date rejection and refusal to force positional date matches when source scope differs. Desktop/DAX execution has not been performed.
+Executed: the original-workbook comparison above and 13/13 unit tests passed, including explicit day-first parsing, invalid-date rejection, plan-period reconciliation and refusal to force positional date matches when source scope differs. Desktop/DAX execution has not been performed.
 
 ## Correction awaiting the approved data/report phase
 
-Use explicit DD/MM/YYYY HH:MM:SS parsing, retain the original source timestamp privately, document the Combo-service filter and preserve the frozen public keys through a validated mapping. Restore the source dates into a reviewed model and recalculate date flags/tenure only after confirming the actual snapshot date. The current public dates and 810-row quarantine remain in place; the source evidence must not be confused with an already corrected dataset. Exact dates are potential linkage attributes and require privacy review before publication.
+Use explicit DD/MM/YYYY HH:MM:SS parsing, retain the source timestamp privately, document the Combo-service filter and preserve frozen public keys through a validated mapping. Restore source dates only through an approved, privacy-reviewed rebuild. If the actual snapshot date remains undisclosed, use a clearly labeled analytical reference date and restrict temporal interpretations accordingly. Current public dates and the 810-row quarantine remain in place. Exact dates need privacy review before publication.
 
 The original workbook contains customer labels, emails, addresses and private OLT addresses. It and the attachment screenshot must remain outside Git. The committed receipt contains aggregate evidence only. Power BI execution is still pending the user's approval.

@@ -1,0 +1,70 @@
+{
+  "by_reported_period": [
+    {
+      "active_partial_listed_amount_units": 38750.0,
+      "listed_amount_units": 38750.0,
+      "period_group": "13_month",
+      "service_rows": 14
+    },
+    {
+      "active_partial_listed_amount_units": 2197.0,
+      "listed_amount_units": 2197.0,
+      "period_group": "199_day",
+      "service_rows": 3
+    },
+    {
+      "active_partial_listed_amount_units": 449.0,
+      "listed_amount_units": 449.0,
+      "period_group": "97_day",
+      "service_rows": 1
+    },
+    {
+      "active_partial_listed_amount_units": 42088.0,
+      "listed_amount_units": 42088.0,
+      "period_group": "annual",
+      "service_rows": 6
+    },
+    {
+      "active_partial_listed_amount_units": 12076.0,
+      "listed_amount_units": 12575.0,
+      "period_group": "half_year",
+      "service_rows": 7
+    },
+    {
+      "active_partial_listed_amount_units": 2956272.0,
+      "listed_amount_units": 3000890.0,
+      "period_group": "monthly",
+      "service_rows": 1188
+    },
+    {
+      "active_partial_listed_amount_units": 2997.0,
+      "listed_amount_units": 2997.0,
+      "period_group": "quarter",
+      "service_rows": 3
+    },
+    {
+      "active_partial_listed_amount_units": 227980.0,
+      "listed_amount_units": 228579.0,
+      "period_group": "unspecified",
+      "service_rows": 58
+    }
+  ],
+  "currency": "not disclosed",
+  "fee_semantics": "listed plan amounts by source period, not recognized revenue or verified MRR",
+  "independent_sql_reconciliation": "passed for per-period counts and listed amounts",
+  "period_normalization": "text alias normalization only; no annual/day amounts divided into monthly revenue",
+  "power_bi_execution": "not executed",
+  "scope": "committed service snapshot; author confirms amounts relate to listed plan periods",
+  "service_records": 1280,
+  "source_period_label_counts": {
+    "13 MONTHLY": 5,
+    "13MONTHLY": 9,
+    "199DAYS": 3,
+    "97DAYS": 1,
+    "ANNUALLY": 6,
+    "HALF YEARLY": 7,
+    "MONTHLY": 1188,
+    "QUARTERLY": 3,
+    "unknown": 58
+  }
+}

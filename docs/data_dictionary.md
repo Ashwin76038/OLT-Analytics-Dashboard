@@ -16,7 +16,7 @@ See the [model definitions](../data/powerbi_star_schema/relationships_and_model.
 | dim_date | year_month | object | ETL output; see build_powerbi_star_schema.py and model definitions |
 | dim_date | week_start | object | ETL output; see build_powerbi_star_schema.py and model definitions |
 | dim_date | is_future_at_extract | bool | ETL output; see build_powerbi_star_schema.py and model definitions |
-| dim_olt | olt_key | object | Build-scoped surrogate key |
+| dim_olt | olt_key | object | Build-scoped group of source OLT addresses; not a verified physical-device identifier |
 | dim_olt | exchange_count | int64 | ETL output; see build_powerbi_star_schema.py and model definitions |
 | dim_olt | primary_exchange_code | object | ETL output; see build_powerbi_star_schema.py and model definitions |
 | dim_olt | multi_exchange_flag | int64 | ETL output; see build_powerbi_star_schema.py and model definitions |
@@ -39,7 +39,7 @@ See the [model definitions](../data/powerbi_star_schema/relationships_and_model.
 | fact_customer_service | activation_date_key | nullable YYYYMMDD | Current public activation date excluding future/missing values; requires original-source reconciliation before tenure/cohort claims |
 | fact_customer_service | reported_activation_date_key | YYYYMMDD | Date preserved from prepared public build; 1,275 values differ from original author-supplied Activation Date, defined as service activation |
 | fact_customer_service | snapshot_date_key | YYYYMMDD | Configured model cutoff 20260912; actual source snapshot date unconfirmed |
-| fact_customer_service | monthly_fee | float64 | ETL output; see build_powerbi_star_schema.py and model definitions |
+| fact_customer_service | monthly_fee | float64 | Legacy field name for source FMC/listed plan amount; use with reported plan_period, currency undisclosed, not verified MRR |
 | fact_customer_service | monthly_fee_band | object | ETL output; see build_powerbi_star_schema.py and model definitions |
 | fact_customer_service | inactive_service_flag | int64 | ETL output; see build_powerbi_star_schema.py and model definitions |
 | fact_customer_service | valid_tenure_days | float64 | ETL output; see build_powerbi_star_schema.py and model definitions |

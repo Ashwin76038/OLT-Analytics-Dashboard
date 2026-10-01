@@ -6,7 +6,7 @@ The public model contains one row per **service in one model snapshot configured
 
 The published sample **is present in this repository**: six CSVs under `data/powerbi_star_schema/` (the 1,280-row service fact and five dimensions), plus a 12-row OLT anomaly output. The audit and tests read those committed files. The project author supplied the original customer workbook privately on 1 October 2026; it is intentionally not distributed. See [source reconciliation](source_workbook_review.md).
 
-The workbook is author-supplied source evidence. Its collection process, permissions, currency, billing period and identity registry remain **independently unverified**. The optional `scripts/build_powerbi_star_schema.py` expects an ignored prepared `customers.csv`; the original-workbook-to-prepared-CSV transformation is not documented. A reviewer can reproduce the public aggregate audit and tests, but cannot independently regenerate the six CSVs from the original workbook. Do not describe this as a fully reproducible raw-to-dashboard pipeline.
+The author identifies the workbook as a confidential government-platform export and confirms that plan amounts relate to the listed plan periods. Portal, bill and tariff documents remain confidential; they will not be requested or published. Currency, actual export date, status-code meanings and an independent identity registry are undisclosed. Use author-attested field meanings and clearly stated assumptions for a scoped descriptive project. The optional builder consumes a prepared private `customers.csv`; the original-to-prepared transformation remains undocumented, so a public clone cannot reproduce a complete original-to-dashboard pipeline.
 
 ## Activation-date decision
 
@@ -24,10 +24,10 @@ For future snapshots, require a source-owner-approved stable service identifier 
 
 - **Service records:** count of fact rows. **Customer keys:** distinct build-scoped groups.
 - **Inactive-only customer key:** no active/partial service and at least one inactive service in this snapshot. It is not a cancellation event.
-- **Listed fee exposure:** sum of supplied fees on active/partial service rows. Currency, period, collections and recognized revenue are unverified; do not call it MRR.
+- **Listed fee exposure:** supplied amounts on active/partial rows, reported with their listed plan periods. Period meanings are author-attested; currency is undisclosed and collections/recognized revenue are unavailable. See [period review](plan_period_review.md). No MRR is established.
 - **Service-state index:** mean of analyst-defined status weights 1, 0.5 and 0. It is not throughput, downtime or network utilization.
 - **High-risk status:** a service-state review label, not a churn probability.
 
 ## Evidence needed before stronger claims
 
-Confirm the actual source snapshot date, source-status definitions, stable approved IDs and billing-period/currency contract. Reconcile public activation dates with the supplied original workbook. Obtain dated cancellation events for churn and interval network telemetry for utilization if those claims are intended. Record source vintage, permissions and privacy review without committing confidential extracts.
+Reconcile public activation dates with the supplied original workbook and label the analysis reference date and status mappings as assumptions where source details remain confidential. Describe plan amounts within supplied periods, with currency undisclosed. Future longitudinal work needs stable approved IDs; observed churn or physical-network claims would additionally need authentic outcomes/telemetry. Those sources are outside the current scoped project and will not be requested from confidential portals.

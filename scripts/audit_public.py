@@ -69,7 +69,7 @@ def audit(model_dir: Path = MODEL) -> dict:
     state_counts = joined.service_status.value_counts().sort_index().to_dict()
     review = fact.data_quality_flag.eq("review")
     receipt = {
-        "scope": "committed public service snapshot; source authenticity unresolved",
+        "scope": "committed customer-source sample; author identifies a confidential government export; public activation dates require reconciliation",
         "snapshot_date_key": int(fact.snapshot_date_key.iloc[0]),
         "service_records": int(len(fact)),
         "customer_keys": int(fact.customer_key.nunique()),

@@ -20,7 +20,7 @@
   "reported_activation_min_key": 20250604,
   "review_records": 816,
   "review_share": 0.6375,
-  "scope": "committed public service snapshot; source authenticity unresolved",
+  "scope": "committed customer-source sample; author identifies a confidential government export; public activation dates require reconciliation",
   "service_records": 1280,
   "service_state_index_status_proxy": 0.961328125,
   "service_status_records": {

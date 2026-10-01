@@ -4,7 +4,7 @@ The committed model contains one service record per snapshot row, not one unique
 
 The model's configured snapshot date is 2026-09-12; the original export's actual snapshot date remains unconfirmed. Future public activation dates remain in the audit field and are excluded from valid tenure. The author confirms Activation Date means service activation. A private source comparison found zero original dates after the cutoff but 1,275 public dates differing from source; public tenure/cohort outputs therefore remain unsuitable for source-backed claims until reviewed restoration. See [source review](source_workbook_review.md). This is a snapshot study: inactive is a service status, not observed cancellation or a churn event. No predictive validation is available.
 
-Listed fees are summed at service grain. Billing period/currency normalization and collections are unverified; therefore these totals are fee exposure, not recognized revenue or verified MRR. Partial-active fees indicate exposure, not demonstrated loss.
+Listed amounts are analyzed at service grain within reported plan periods, which the author confirms as the relevant cadence labels. Currency is undisclosed and billing documents remain confidential. No revenue normalization, collection or recognition is verified. The overall mixed-period sum is unnormalized listed-fee exposure; partial-active amounts are exposure, not demonstrated loss. See [period review](plan_period_review.md).
 
 The service-state index uses analyst-assigned weights active=1, partial-active=0.5, inactive=0. It measures status mix, not utilization, throughput or downtime. Risk denotes partial-active/inactive status; it is not a probability.
 
