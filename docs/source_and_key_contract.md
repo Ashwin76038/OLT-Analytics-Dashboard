@@ -12,7 +12,7 @@ The author identifies the workbook as a confidential government-platform export 
 
 The author confirms that Activation Date means internet plan/service activation. Explicit day-first parsing of the original workbook yields dates from 1999-02-15 through 2026-08-29 and zero dates after the configured 2026-09-12 cutoff. In contrast, 810/1,280 public values are later than that cutoff, reaching 2028-11-30; 1,275 of 1,280 public dates differ from source under corroborated row-order comparison. The transformation responsible remains unresolved. The cutoff is model configuration, not a verified source snapshot date.
 
-The current model retains public dates in `reported_activation_date_key`, sets `dq_future_activation_flag=1`, and leaves validated dates/tenure null for future rows. Keep that quarantine until a privacy-reviewed source-date restoration and approved rebuild. Do not silently replace dates, infer renewal/expiry meanings, or use the remaining public dates for source-backed cohort claims. All public activation values need reconciliation, including the 465 nonfuture values that differ from source.
+All 1,280 public activation and tenure values are now withheld. The historical future flag preserves the 810 earlier prepared discrepancies without retaining their dates. Current missing-date flags mean public withholding, not missing original dates. Source dates were not silently substituted; aggregate historical and current receipts document the change. No public cohort or tenure claim is supported.
 
 ## Keys and privacy
 
@@ -30,4 +30,4 @@ For future snapshots, require a source-owner-approved stable service identifier 
 
 ## Evidence needed before stronger claims
 
-Reconcile public activation dates with the supplied original workbook and label the analysis reference date and status mappings as assumptions where source details remain confidential. Describe plan amounts within supplied periods, with currency undisclosed. Future longitudinal work needs stable approved IDs; observed churn or physical-network claims would additionally need authentic outcomes/telemetry. Those sources are outside the current scoped project and will not be requested from confidential portals.
+The source comparison is complete at aggregate level. Label the analysis reference date and status mappings as assumptions where source details remain confidential. Describe plan amounts within supplied periods, with currency undisclosed. Future longitudinal work needs stable approved IDs; observed churn or physical-network claims would additionally need authentic outcomes/telemetry. Those sources are outside the current scoped project and will not be requested from confidential portals.

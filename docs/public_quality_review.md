@@ -1,34 +1,16 @@
-# Public snapshot quality review
+# Public quality review: before and after
 
-Run `python scripts/audit_public.py --output docs/public_audit.json` to reproduce the aggregate receipt. It reads only the six committed sanitized tables and independently reconciles headline counts with SQLite. The existing star-schema tests and new audit tests cover keys, foreign keys, future-date exclusions, review counts and important KPI denominators.
+| Evidence | Earlier prepared model | Current public model |
+|---|---:|---:|
+| Service rows / grouped keys | 1,280 / 1,193 | 1,280 / 1,193 |
+| Future activation values | 810 | 0 published; all dates withheld |
+| Historical future flags | 810 | 810 retained |
+| Public tenure records | 470 | 0; Desktop displays blank |
+| Quality-review rows | 816 | 58 unknown periods |
+| Dates withheld | 0 | 1,280 |
 
-**Source reconciliation update, 1 October 2026:** the author supplied the original workbook and clarified Activation Date as service activation. The original selected rows contain zero dates after the configured cutoff, whereas 1,275 public dates differ from source. The table below describes the still-uncorrected public model; the 810 future values must not be attributed to the original workbook. See [source review](source_workbook_review.md).
+The reduction in flagged current dates does not mean dates were repaired or verified. Precise source dates remain private, and the old prepared dates cannot support source-backed tenure. The original comparison found 1,275 differing dates and zero original dates beyond the assumed reference. The transformation is unresolved.
 
-| Finding | Current evidence | Decision risk | Action |
-|---|---:|---|---|
-| Future public activation | 810/1,280 service rows (63.28%); 772 active, 22 partial-active, 16 inactive | Tenure/cohort results would be invalid if these dates were used | Retain current public dates for audit; reconcile all activation values with the original workbook before tenure/cohort claims |
-| Other quality flags | 816/1,280 review rows (63.75%); 58 rows have unknown plan period, with overlap with future-date rows | Missing period prevents interpreting fee cadence | Resolve period definitions upstream; do not convert listed fees to MRR |
-| Grain/identity | 1,280 service rows versus 1,193 grouped customer keys; 22 inactive-only keys | Service shares and customer shares need different denominators; keys are not verified people | Label every KPI by grain; require stable source IDs before multi-snapshot claims |
-| Status mix | 1,210 active, 41 partial-active, 29 inactive | Status is not observed churn or network telemetry | Use status review language, not churn/performance outcomes |
-| Fee exposure | 3,282,809 unnormalized listed units on active/partial services; 54,712 on partial-active services | Source periods vary, 58 are unspecified and currency is undisclosed | Report amounts within supplied periods using the new period audit; avoid revenue/loss claims |
-| Public BI artifact | Sanitized star-schema CSVs, candidate DAX and a blueprint are committed; refreshed Desktop report is absent | Interviewer cannot verify a current interactive Power BI report | Build and validate a privacy-reviewed report only after explicit approval for Power BI changes |
+Evidence: `before_date_quarantine_audit.json`, `public_audit.json`, historical `source_workbook_receipt.json`, and current `source_workbook_current_receipt.json`. Receipt fields about whether a script changed data or executed Power BI describe that individual read-only comparison script, not the entire project. Desktop execution is recorded separately in `powerbi_validation.md`.
 
-### What the audit can and cannot validate
-
-The receipt validates public data structure and aggregate calculations, not the provenance of the private extract or execution of candidate DAX in Power BI Desktop. The screenshot in `images/` is a Python-rendered public-data figure. It is not evidence of a refreshed Power BI report. Old binary/screenshots were quarantined; the public tree cannot prove old Git objects were removed.
-
-### Before and after this review
-
-| Item | Latest committed starting state | This review |
-|---|---|---|
-| Service and customer counts | 1,280 services and 1,193 grouped keys already documented | Unchanged; independent audit checks both grains |
-| Future activation | 810 flagged and excluded by the existing ETL | Unchanged; new receipt and tests verify 810 excluded from validated tenure, leaving 470 rows |
-| Quality and status KPIs | Existing Python summary and candidate DAX | New receipt checks 816 review rows, 22 inactive-only grouped keys and listed-fee exposure with explicit units/denominators |
-| Automated tests | 5 passing baseline tests | 13 passing tests, including duplicate-key rejection, future-date regression, private-source parsing and plan-period reconciliation |
-| Power BI | Candidate DAX/model guidance, no validated Desktop report | Unchanged; Desktop relationships, measures, filters and visuals remain unverified |
-
-The strongest results are the source/public date reconciliation, correct service/customer denominators and period-aware listed-amount reporting. Confidential portal/billing documents are outside the scoped project; author-attested definitions and explicit reference-date/status assumptions can support a bounded service/plan dashboard. A defensible 4/5 still requires reviewed source-date correction and a current Power BI report with executed DAX/filter/visual validation. The public model and native report are not yet corrected or validated.
-
-### Resume-safe project story
-
-“I modeled a telecom service snapshot and built checks that distinguish 1,280 services from 1,193 grouped customer keys. After obtaining the original workbook, I reconciled the scoped rows on fees, plans and grouping and found 1,275 public activation dates differed from source. I retained the public-data quality flags and stopped tenure/cohort claims pending a documented, privacy-reviewed correction and Power BI refresh.”
+Status totals remain 1,210 active, 41 partial, 29 inactive; 22 grouped keys are inactive-only. Unknown periods and status review are separate decisions. These are descriptive operational review leads, not real churn or financial-loss estimates.

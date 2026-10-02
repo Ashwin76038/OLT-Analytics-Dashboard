@@ -1,0 +1,22 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 0
+
+annotation PBI_QueryOrder = ["fact_customer_service","dim_customer","dim_olt","dim_plan","dim_service_state","dim_date","_Measures","DataRoot"]
+
+annotation PBI_ProTooling = ["DaxQueryView_Desktop","DevMode"]
+
+ref table fact_customer_service
+ref table dim_customer
+ref table dim_olt
+ref table dim_plan
+ref table dim_service_state
+ref table dim_date
+ref table _Measures
+

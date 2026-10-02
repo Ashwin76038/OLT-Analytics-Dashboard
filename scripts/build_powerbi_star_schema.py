@@ -199,6 +199,17 @@ def build_model(source_path: Path, output_dir: Path, as_of_date: pd.Timestamp) -
         ]
     ]
 
+    # Public exports never release precise source dates or derived tenure.
+    # The legacy flag records future values in this input, not verified source defects.
+    fact["legacy_prepared_future_activation_flag"] = fact["dq_future_activation_flag"]
+    fact["activation_date_withheld_flag"] = 1
+    for column in ["activation_date_key", "reported_activation_date_key", "valid_tenure_days", "valid_tenure_months"]:
+        fact[column] = pd.NA
+    fact["dq_future_activation_flag"] = 0
+    fact["dq_missing_activation_flag"] = 1
+    fact["data_quality_flag"] = np.where(fact[["dq_invalid_fee_flag", "dq_connection_count_flag", "dq_unknown_plan_period_flag"]].any(axis=1), "review", "valid")
+    calendar = calendar.loc[calendar.date.eq(as_of_date)].copy()
+
     outputs = {
         "fact_customer_service.csv": fact,
         "dim_customer.csv": customer_dim,

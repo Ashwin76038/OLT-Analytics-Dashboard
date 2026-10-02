@@ -69,7 +69,7 @@ def audit(model_dir: Path = MODEL) -> dict:
     state_counts = joined.service_status.value_counts().sort_index().to_dict()
     review = fact.data_quality_flag.eq("review")
     receipt = {
-        "scope": "committed customer-source sample; author identifies a confidential government export; public activation dates require reconciliation",
+        "scope": "sanitized customer-source sample; unreliable prepared dates removed; exact original activation dates withheld",
         "snapshot_date_key": int(fact.snapshot_date_key.iloc[0]),
         "service_records": int(len(fact)),
         "customer_keys": int(fact.customer_key.nunique()),
@@ -85,8 +85,10 @@ def audit(model_dir: Path = MODEL) -> dict:
         "future_activation_share": float(future.mean()),
         "future_by_status": {k: int(v) for k, v in joined.loc[future].service_status.value_counts().sort_index().items()},
         "valid_tenure_records": int(fact.valid_tenure_days.notna().sum()),
-        "reported_activation_min_key": int(fact.reported_activation_date_key.min()),
-        "reported_activation_max_key": int(fact.reported_activation_date_key.max()),
+        "reported_activation_min_key": int(fact.reported_activation_date_key.min()) if fact.reported_activation_date_key.notna().any() else None,
+        "reported_activation_max_key": int(fact.reported_activation_date_key.max()) if fact.reported_activation_date_key.notna().any() else None,
+        "withheld_activation_records": int(fact.activation_date_withheld_flag.sum()),
+        "legacy_prepared_future_activation_records": int(fact.legacy_prepared_future_activation_flag.sum()),
         "unknown_plan_period_records": int(fact.dq_unknown_plan_period_flag.sum()),
         "review_records": int(review.sum()),
         "review_share": float(review.mean()),

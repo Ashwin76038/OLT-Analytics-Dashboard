@@ -1,0 +1,139 @@
+table fact_customer_service
+	lineageTag: 40c4264e-e2a0-4c34-9b2b-ece17ca84cc9
+
+	column service_snapshot_key
+		dataType: string
+		lineageTag: a995da4c-ebeb-401c-82ec-96193295ef67
+		summarizeBy: none
+		sourceColumn: service_snapshot_key
+
+	column customer_key
+		dataType: string
+		lineageTag: 858f9a85-c8ed-4a5a-8950-0945e4ded255
+		summarizeBy: none
+		sourceColumn: customer_key
+
+	column olt_key
+		dataType: string
+		lineageTag: f36b6251-54e9-4f00-b826-ffe0ab76842e
+		summarizeBy: none
+		sourceColumn: olt_key
+
+	column plan_key
+		dataType: string
+		lineageTag: ca1db479-392f-4e30-b969-d316b1dc9273
+		summarizeBy: none
+		sourceColumn: plan_key
+
+	column service_state_key
+		dataType: string
+		lineageTag: fafb60ce-b30a-49e5-a43b-7e2b05efa4e9
+		summarizeBy: none
+		sourceColumn: service_state_key
+
+	column activation_date_key
+		dataType: int64
+		lineageTag: 83f1f6f7-e06a-48a8-a3a6-63c3b1ac491d
+		summarizeBy: none
+		sourceColumn: activation_date_key
+
+	column reported_activation_date_key
+		dataType: int64
+		lineageTag: c138df63-4f89-47db-b515-fb44a4685ab9
+		summarizeBy: none
+		sourceColumn: reported_activation_date_key
+
+	column snapshot_date_key
+		dataType: int64
+		lineageTag: 1e47ab58-d82e-4f6b-8ecb-7c94ac5bdc4b
+		summarizeBy: none
+		sourceColumn: snapshot_date_key
+
+	column monthly_fee
+		dataType: double
+		lineageTag: e93799e9-bace-43f5-8604-fd6b9ff32b21
+		summarizeBy: none
+		sourceColumn: monthly_fee
+
+	column monthly_fee_band
+		dataType: string
+		lineageTag: 74af9b57-537f-4ea3-a3aa-9f58e0b80aa7
+		summarizeBy: none
+		sourceColumn: monthly_fee_band
+
+	column inactive_service_flag
+		dataType: int64
+		lineageTag: 39a53086-ce89-48e0-80d2-32a65b36d205
+		summarizeBy: none
+		sourceColumn: inactive_service_flag
+
+	column valid_tenure_days
+		dataType: double
+		lineageTag: 699a4659-0871-4e18-9605-c5e16e43e759
+		summarizeBy: none
+		sourceColumn: valid_tenure_days
+
+	column valid_tenure_months
+		dataType: double
+		lineageTag: 958f48d8-de67-49a7-bb66-048fb017492e
+		summarizeBy: none
+		sourceColumn: valid_tenure_months
+
+	column dq_future_activation_flag
+		dataType: int64
+		lineageTag: b4d5a263-6f58-4b9f-904c-b1e97c94b40c
+		summarizeBy: none
+		sourceColumn: dq_future_activation_flag
+
+	column dq_missing_activation_flag
+		dataType: int64
+		lineageTag: 78d79ee5-262a-4b98-973d-d788d3297e1d
+		summarizeBy: none
+		sourceColumn: dq_missing_activation_flag
+
+	column dq_invalid_fee_flag
+		dataType: int64
+		lineageTag: 9cb45933-c8d0-46af-acf9-20e5938fcce5
+		summarizeBy: none
+		sourceColumn: dq_invalid_fee_flag
+
+	column dq_connection_count_flag
+		dataType: int64
+		lineageTag: 5408cb03-94f8-4fd2-92ed-73220be56650
+		summarizeBy: none
+		sourceColumn: dq_connection_count_flag
+
+	column dq_unknown_plan_period_flag
+		dataType: int64
+		lineageTag: f9fd5629-5d1f-4ebc-adce-b25b53c5afac
+		summarizeBy: none
+		sourceColumn: dq_unknown_plan_period_flag
+
+	column data_quality_flag
+		dataType: string
+		lineageTag: 391a55cf-9470-4377-9550-275c2c7cb58f
+		summarizeBy: none
+		sourceColumn: data_quality_flag
+
+	column legacy_prepared_future_activation_flag
+		dataType: int64
+		lineageTag: 461b9e15-c0c9-4bc3-8018-885c5cd49427
+		summarizeBy: none
+		sourceColumn: legacy_prepared_future_activation_flag
+
+	column activation_date_withheld_flag
+		dataType: int64
+		lineageTag: 12747a42-18c0-431c-8cda-af978cb02265
+		summarizeBy: none
+		sourceColumn: activation_date_withheld_flag
+
+	partition fact_customer_service = m
+		mode: import
+		source =
+				let
+				 Source = Csv.Document(File.Contents(DataRoot & "fact_customer_service.csv"),[Delimiter=",",Encoding=65001,QuoteStyle=QuoteStyle.Csv]),
+				 Headers = Table.PromoteHeaders(Source,[PromoteAllScalars=true]),
+				 Nulls = Table.ReplaceValue(Headers,"",null,Replacer.ReplaceValue,Table.ColumnNames(Headers)),
+				 Typed = Table.TransformColumnTypes(Nulls,{{"service_snapshot_key", type text},{"customer_key", type text},{"olt_key", type text},{"plan_key", type text},{"service_state_key", type text},{"activation_date_key", Int64.Type},{"reported_activation_date_key", Int64.Type},{"snapshot_date_key", Int64.Type},{"monthly_fee", type number},{"monthly_fee_band", type text},{"inactive_service_flag", Int64.Type},{"valid_tenure_days", type number},{"valid_tenure_months", type number},{"dq_future_activation_flag", Int64.Type},{"dq_missing_activation_flag", Int64.Type},{"dq_invalid_fee_flag", Int64.Type},{"dq_connection_count_flag", Int64.Type},{"dq_unknown_plan_period_flag", Int64.Type},{"data_quality_flag", type text},{"legacy_prepared_future_activation_flag", Int64.Type},{"activation_date_withheld_flag", Int64.Type}},"en-US")
+				in Typed
+

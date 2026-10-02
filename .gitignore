@@ -27,6 +27,8 @@
 *.sqlite*
 *.bak
 *.pbix
+**/.pbi/
+**/.cache/
 !data/powerbi_star_schema/*.csv
 
 # User-specific files (MonoDevelop/Xamarin Studio)

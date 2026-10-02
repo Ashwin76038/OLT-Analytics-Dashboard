@@ -1,9 +1,13 @@
-# SQL engine and executed checks
+# SQL engine and reproduction
 
-The project author confirms using **MySQL** for the original project. MySQL is the author's SQL tool; this review has not executed the original queries in a MySQL instance.
+The author used **MySQL**. Native MySQL 8.0.46 was used on 1 October 2026 to load public CSVs into an isolated, new audit schema and reconcile seven aggregates with pandas. See `mysql_validation.json` and `sql/mysql_kpi_queries.sql`. This verifies the supplied audit queries, not an undisclosed original MySQL workflow.
 
-The additional public audit scripts use Python and an in-memory **SQLite** database to independently reconcile counts, denominators and listed amounts. Their passing results establish those checks in SQLite, not MySQL execution or Power BI DAX validation.
+Run against your own authorized MySQL 8 instance:
 
-The existing `sql/powerbi_star_schema.sql` is a **SQL Server reference DDL** artifact. Its `dbo` qualification, bracketed names and casts should not be represented as tested MySQL syntax. It is retained as an existing reference; this review does not claim to have reproduced the author's MySQL workflow.
+```bash
+python scripts/validate_mysql.py --client mysql --schema portfolio_audit_olt_new -- --host=127.0.0.1 --port=3306 --user=YOUR_USER
+```
 
-For interview descriptions: “I used MySQL in the project. Additional Python/SQLite checks reconcile the public tables; native MySQL and Power BI execution checks are separately pending.”
+Use an existing secure client configuration for credentials. The schema must not already exist; the script does not drop or overwrite one. `analyze_public.py` and `audit_public.py` additionally use in-memory SQLite for portable independent checks. Desktop validation is separately recorded in `powerbi_validation.md`.
+
+The obsolete SQL Server reference DDL has been removed; MySQL loading and executable KPI queries are the supported SQL route.

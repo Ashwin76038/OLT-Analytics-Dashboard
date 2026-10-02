@@ -21,8 +21,10 @@ class PublicAuditTests(unittest.TestCase):
         self.assertEqual(current["service_records"], 1280)
         self.assertEqual(current["customer_keys"], 1193)
         self.assertEqual(current["inactive_only_customer_keys"], 22)
-        self.assertEqual(current["future_activation_records"], 810)
-        self.assertEqual(current["valid_tenure_records"], 470)
+        self.assertEqual(current["future_activation_records"], 0)
+        self.assertEqual(current["legacy_prepared_future_activation_records"], 810)
+        self.assertEqual(current["withheld_activation_records"], 1280)
+        self.assertEqual(current["valid_tenure_records"], 0)
         self.assertAlmostEqual(current["active_service_share"], 1210 / 1280)
         self.assertEqual(current["independent_sql_reconciliation"].split()[0], "passed")
 

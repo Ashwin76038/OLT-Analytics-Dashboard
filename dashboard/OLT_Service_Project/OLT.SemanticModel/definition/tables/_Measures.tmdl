@@ -1,0 +1,89 @@
+table _Measures
+	lineageTag: cae39ad1-22eb-43b1-ada0-3e30dde31105
+
+	measure 'Service Records' = COUNTROWS(fact_customer_service)
+		formatString: #,0
+		lineageTag: 6121b1d7-e0d9-487b-9faf-de47507a2984
+
+	measure 'Customer Keys' = DISTINCTCOUNT(fact_customer_service[customer_key])
+		formatString: #,0
+		lineageTag: 9c5f5452-232a-409a-874e-491a7224acf0
+
+	measure 'OLT Groups' = DISTINCTCOUNT(fact_customer_service[olt_key])
+		formatString: #,0
+		lineageTag: 870e986a-3f4d-4189-a294-4cc12997ccbc
+
+	measure 'Active Services' = COALESCE(CALCULATE([Service Records],KEEPFILTERS(dim_service_state[service_status]="active")),0)
+		formatString: #,0
+		lineageTag: bcd9c9d0-afd2-4449-949d-eeb908859003
+
+	measure 'Partial Services' = COALESCE(CALCULATE([Service Records],KEEPFILTERS(dim_service_state[service_status]="partial_active")),0)
+		formatString: #,0
+		lineageTag: 080f1fcb-5918-411b-9366-928cc5c6f8ba
+
+	measure 'Inactive Services' = COALESCE(CALCULATE([Service Records],KEEPFILTERS(dim_service_state[service_status]="inactive")),0)
+		formatString: #,0
+		lineageTag: 9e9cf98b-88f3-4a89-9d8f-526cf6c6960f
+
+	measure 'Active Service Share' = DIVIDE([Active Services],[Service Records])
+		formatString: 0.00%
+		lineageTag: 37f82723-13b4-44ec-af96-b8661cb503e3
+
+	measure 'Status Review Services' = [Partial Services]+[Inactive Services]
+		formatString: #,0
+		lineageTag: a307e67b-2cda-4566-8e9b-c1cf9ee11471
+
+	measure 'Status Review Share' = DIVIDE([Status Review Services],[Service Records])
+		formatString: 0.00%
+		lineageTag: fafbea31-daee-475e-9b37-3cef2c4a90ec
+
+	measure 'Inactive Only Keys' = COALESCE(COUNTROWS(FILTER(VALUES(fact_customer_service[customer_key]),CALCULATE(COUNTROWS(fact_customer_service),REMOVEFILTERS(dim_service_state),dim_service_state[service_status] IN {"active","partial_active"})=0 && CALCULATE(COUNTROWS(fact_customer_service),REMOVEFILTERS(dim_service_state),dim_service_state[service_status]="inactive")>0)),0)
+		formatString: #,0
+		lineageTag: 2d532868-262c-4233-8b9b-4fe37bb6c32b
+
+	measure 'Monthly Listed Exposure' = CALCULATE(SUM(fact_customer_service[monthly_fee]),KEEPFILTERS(dim_plan[plan_period]="MONTHLY"),KEEPFILTERS(dim_service_state[service_status] IN {"active","partial_active"}))
+		formatString: #,0
+		lineageTag: 2d0035a3-6c81-4453-8e93-2e9ef512456a
+
+	measure 'Listed Exposure In Period' = IF(HASONEVALUE(dim_plan[plan_period]),CALCULATE(SUM(fact_customer_service[monthly_fee]),KEEPFILTERS(dim_service_state[service_status] IN {"active","partial_active"})),BLANK())
+		formatString: #,0
+		lineageTag: 5a8ca593-fa38-4b7b-ac76-5daf9fd7fb5d
+
+	measure 'Service State Index' = DIVIDE(SUMX(fact_customer_service,RELATED(dim_service_state[olt_performance_weight])),[Service Records])
+		formatString: 0.0000
+		lineageTag: d97c9c59-b258-453a-bddd-e5c944e31701
+
+	measure 'Date Withheld Records' = SUM(fact_customer_service[activation_date_withheld_flag])
+		formatString: #,0
+		lineageTag: d9d63586-98f0-40d2-8edf-93bbcec55378
+
+	measure 'Legacy Future Dates' = SUM(fact_customer_service[legacy_prepared_future_activation_flag])
+		formatString: #,0
+		lineageTag: dcf903b2-7576-4521-852f-abe7b86c08c2
+
+	measure 'Current Future Dates' = SUM(fact_customer_service[dq_future_activation_flag])
+		formatString: #,0
+		lineageTag: d5aaf5fe-2719-4e71-bdbd-f1f979addf02
+
+	measure 'Unknown Period Records' = SUM(fact_customer_service[dq_unknown_plan_period_flag])
+		formatString: #,0
+		lineageTag: 25f84f6f-f495-4a86-9aca-c658240cb117
+
+	measure 'Quality Review Records' = COALESCE(CALCULATE([Service Records],KEEPFILTERS(fact_customer_service[data_quality_flag]="review")),0)
+		formatString: #,0
+		lineageTag: 38034b5d-ff1e-4c5b-9878-4d1b62bb6a44
+
+	measure 'Valid Tenure Records' = COUNT(fact_customer_service[valid_tenure_days])
+		formatString: #,0
+		lineageTag: 46b4a575-310e-4ceb-8ffa-ce86feadf0c9
+
+	column Value
+		dataType: int64
+		isHidden
+		lineageTag: cccfa35d-c0c8-4f0d-92de-225e66790230
+		sourceColumn: Value
+
+	partition _Measures = m
+		mode: import
+		source = #table(type table [Value=Int64.Type],{{1}})
+
