@@ -1,15 +1,11 @@
-# Methodology and measurement limits
+# Methodology
 
-The committed model contains one service record per snapshot row, not one unique person. Customer keys group normalized source customer labels; there is no independent identity registry to validate name collisions. Keys are scoped to this build, not stable across reordered extracts. Do not append independently keyed snapshots.
+Grain: one frozen service record, 1,280 rows; 1,193 normalized-label customer groups. Customer identity and actual snapshot date are not independently verified. The configured reference is 2026-09-12.
 
-The supplied snapshot date is 2026-09-12. Future activation dates remain in the audit field and are excluded from valid tenure. This is a snapshot study: inactive is a service status, not observed cancellation or a churn event. No predictive validation is available.
+Source A/D/E map to active/partial_active/inactive as analyst assumptions. Active share uses all service rows in filter context. Status review is partial + inactive. Inactive-only keys have at least one inactive service and no active/partial service; status selection does not remove their other services when classifying the key. OLT and plan context still apply.
 
-Listed fees are summed at service grain. Billing period/currency normalization and collections are unverified; therefore these totals are fee exposure, not recognized revenue or verified MRR. Partial-active fees indicate exposure, not demonstrated loss.
+Listed exposure sums supplied amounts on active/partial services within a plan period. Mixed-period exposure is blank. Currency, payment, recognition and collections are unavailable. The legacy `monthly_fee` name does not establish monthly revenue. Status index averages weights 1, 0.5, 0; it is not network telemetry.
 
-The service-state index uses analyst-assigned weights active=1, partial-active=0.5, inactive=0. It measures status mix, not utilization, throughput or downtime. Risk denotes partial-active/inactive status; it is not a probability.
+All precise public activation/tenure values are withheld after source comparison identified 1,275 discrepancies. The historical future flag preserves 810 earlier prepared discrepancies. Current future=0 means no published activation dates, not evidence that all source dates were validated against an actual export. Missing-date=1 means withheld in this public model. Quality-review rows=58 reflects remaining unknown periods, excluding intentional withholding. No tenure/cohort analysis is supported.
 
-Anomaly analysis standardizes OLT high-risk service share using 0.6745*(share-median)/MAD. Absolute scores above 3.5 are review flags. Only 12 OLT groups exist, their sizes differ, and a zero MAD produces undefined scores and no automatic flag. Review the raw rates and denominators before acting.
-
-Privacy: public CSVs exclude direct source identifiers. Surrogate keys and retained plan/date/area attributes can still permit linkage with outside information. Legacy spreadsheets and screenshots were quarantined from the current checkout; old Git history needs separate review and remediation. No claim of historical erasure is made.
-
-Validation: run the unittest suite, anomaly script, and SQLite analysis script. Power BI DAX and SQL Server DDL need their native engines for execution validation.
+Five single-direction relationships connect the service fact to customer, OLT, plan, state and reference-date dimensions. Native measures are in the PBIP `_Measures.tmdl`; the old DAX filename is a reference copy. [Executed Desktop validation](powerbi_validation.md) covers 114 checks, representative interactions and current screenshots. The native MySQL audit and Python/SQLite checks are independently documented; no original private SQL workflow is claimed executed.

@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "OLT_Service_Analytics"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "f4a977e3-7508-4410-8f8c-bb9907f545b3"
+  }
+}

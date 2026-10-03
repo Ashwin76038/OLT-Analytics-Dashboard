@@ -1,0 +1,37 @@
+table dim_olt
+	lineageTag: 9a7d114d-aa12-4d05-8531-00b364be598a
+
+	column olt_key
+		dataType: string
+		lineageTag: e8543bcb-010a-432a-8001-71d3fc644a5c
+		summarizeBy: none
+		sourceColumn: olt_key
+
+	column exchange_count
+		dataType: int64
+		lineageTag: 970a8392-bba5-4f6c-b2fe-7becfbdc5668
+		summarizeBy: none
+		sourceColumn: exchange_count
+
+	column primary_exchange_code
+		dataType: string
+		lineageTag: f5c52185-3f05-4034-a0eb-c2eaf5c4a0f3
+		summarizeBy: none
+		sourceColumn: primary_exchange_code
+
+	column multi_exchange_flag
+		dataType: int64
+		lineageTag: 6cfcec14-948b-42bc-a851-e6bec95d6ea4
+		summarizeBy: none
+		sourceColumn: multi_exchange_flag
+
+	partition dim_olt = m
+		mode: import
+		source =
+				let
+				 Source = Csv.Document(File.Contents(DataRoot & "dim_olt.csv"),[Delimiter=",",Encoding=65001,QuoteStyle=QuoteStyle.Csv]),
+				 Headers = Table.PromoteHeaders(Source,[PromoteAllScalars=true]),
+				 Nulls = Table.ReplaceValue(Headers,"",null,Replacer.ReplaceValue,Table.ColumnNames(Headers)),
+				 Typed = Table.TransformColumnTypes(Nulls,{{"olt_key", type text},{"exchange_count", Int64.Type},{"primary_exchange_code", type text},{"multi_exchange_flag", Int64.Type}},"en-US")
+				in Typed
+

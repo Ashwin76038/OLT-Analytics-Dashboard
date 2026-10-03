@@ -1,0 +1,4 @@
+service_state_key,service_status,is_revenue_generating,network_quality_indicator,risk_level,risk_reason,olt_performance_weight
+STATE_0001,active,1,telemetry_not_available,low,no_observed_risk_signal,1.0
+STATE_0002,partial_active,1,degraded_service_state,high,partial_active_service,0.5
+STATE_0003,inactive,0,disconnected,high,disconnected_or_cancelled,0.0

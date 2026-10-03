@@ -39,7 +39,11 @@ class StarSchemaTests(unittest.TestCase):
 
     def test_future_dates_are_quarantined(self) -> None:
         future = self.fact["dq_future_activation_flag"].eq(1)
-        self.assertEqual(int(future.sum()), 810)
+        self.assertEqual(int(future.sum()), 0)
+        self.assertEqual(int(self.fact.legacy_prepared_future_activation_flag.sum()), 810)
+        self.assertTrue(self.fact.activation_date_withheld_flag.eq(1).all())
+        self.assertTrue(self.fact.reported_activation_date_key.isna().all())
+        self.assertTrue(self.fact.valid_tenure_days.isna().all())
         self.assertTrue(self.fact.loc[future, "activation_date_key"].isna().all())
         self.assertTrue(self.fact.loc[future, "valid_tenure_days"].isna().all())
         self.assertFalse((self.fact["valid_tenure_days"].dropna() < 0).any())

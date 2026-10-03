@@ -1,0 +1,37 @@
+table dim_plan
+	lineageTag: fd8594e1-3a64-425b-ad36-5ee73278ed63
+
+	column plan_key
+		dataType: string
+		lineageTag: a75f0599-0580-4c52-a0d4-f0b1678a9ce3
+		summarizeBy: none
+		sourceColumn: plan_key
+
+	column subscription_plan
+		dataType: string
+		lineageTag: 43fb3f74-fe87-447d-ac8f-9980ca427d55
+		summarizeBy: none
+		sourceColumn: subscription_plan
+
+	column sub_service_type
+		dataType: string
+		lineageTag: 196de265-365d-45d9-871e-2b7b50458900
+		summarizeBy: none
+		sourceColumn: sub_service_type
+
+	column plan_period
+		dataType: string
+		lineageTag: 26ae6925-0e7a-4539-a19a-66ba15ec7fd5
+		summarizeBy: none
+		sourceColumn: plan_period
+
+	partition dim_plan = m
+		mode: import
+		source =
+				let
+				 Source = Csv.Document(File.Contents(DataRoot & "dim_plan.csv"),[Delimiter=",",Encoding=65001,QuoteStyle=QuoteStyle.Csv]),
+				 Headers = Table.PromoteHeaders(Source,[PromoteAllScalars=true]),
+				 Nulls = Table.ReplaceValue(Headers,"",null,Replacer.ReplaceValue,Table.ColumnNames(Headers)),
+				 Typed = Table.TransformColumnTypes(Nulls,{{"plan_key", type text},{"subscription_plan", type text},{"sub_service_type", type text},{"plan_period", type text}},"en-US")
+				in Typed
+

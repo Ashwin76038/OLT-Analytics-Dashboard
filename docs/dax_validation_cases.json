@@ -1,0 +1,572 @@
+[
+  {
+    "check": "All / Service Records",
+    "expression": "[Service Records]",
+    "expected": 1280
+  },
+  {
+    "check": "All / Customer Keys",
+    "expression": "[Customer Keys]",
+    "expected": 1193
+  },
+  {
+    "check": "All / OLT Groups",
+    "expression": "[OLT Groups]",
+    "expected": 12
+  },
+  {
+    "check": "All / Active Services",
+    "expression": "[Active Services]",
+    "expected": 1210
+  },
+  {
+    "check": "All / Partial Services",
+    "expression": "[Partial Services]",
+    "expected": 41
+  },
+  {
+    "check": "All / Inactive Services",
+    "expression": "[Inactive Services]",
+    "expected": 29
+  },
+  {
+    "check": "All / Active Service Share",
+    "expression": "[Active Service Share]",
+    "expected": 0.9453125
+  },
+  {
+    "check": "All / Status Review Services",
+    "expression": "[Status Review Services]",
+    "expected": 70
+  },
+  {
+    "check": "All / Status Review Share",
+    "expression": "[Status Review Share]",
+    "expected": 0.0546875
+  },
+  {
+    "check": "All / Inactive Only Keys",
+    "expression": "[Inactive Only Keys]",
+    "expected": 22
+  },
+  {
+    "check": "All / Monthly Listed Exposure",
+    "expression": "[Monthly Listed Exposure]",
+    "expected": 2956272.0
+  },
+  {
+    "check": "All / Listed Exposure In Period",
+    "expression": "[Listed Exposure In Period]",
+    "expected": null
+  },
+  {
+    "check": "All / Service State Index",
+    "expression": "[Service State Index]",
+    "expected": 0.961328125
+  },
+  {
+    "check": "All / Date Withheld Records",
+    "expression": "[Date Withheld Records]",
+    "expected": 1280
+  },
+  {
+    "check": "All / Legacy Future Dates",
+    "expression": "[Legacy Future Dates]",
+    "expected": 810
+  },
+  {
+    "check": "All / Current Future Dates",
+    "expression": "[Current Future Dates]",
+    "expected": 0
+  },
+  {
+    "check": "All / Unknown Period Records",
+    "expression": "[Unknown Period Records]",
+    "expected": 58
+  },
+  {
+    "check": "All / Quality Review Records",
+    "expression": "[Quality Review Records]",
+    "expected": 58
+  },
+  {
+    "check": "All / Valid Tenure Records",
+    "expression": "[Valid Tenure Records]",
+    "expected": null
+  },
+  {
+    "check": "OLT 1 / Service Records",
+    "expression": "CALCULATE([Service Records],TREATAS({\"OLT_0001\"},dim_olt[olt_key]))",
+    "expected": 449
+  },
+  {
+    "check": "OLT 1 / Customer Keys",
+    "expression": "CALCULATE([Customer Keys],TREATAS({\"OLT_0001\"},dim_olt[olt_key]))",
+    "expected": 428
+  },
+  {
+    "check": "OLT 1 / OLT Groups",
+    "expression": "CALCULATE([OLT Groups],TREATAS({\"OLT_0001\"},dim_olt[olt_key]))",
+    "expected": 1
+  },
+  {
+    "check": "OLT 1 / Active Services",
+    "expression": "CALCULATE([Active Services],TREATAS({\"OLT_0001\"},dim_olt[olt_key]))",
+    "expected": 426
+  },
+  {
+    "check": "OLT 1 / Partial Services",
+    "expression": "CALCULATE([Partial Services],TREATAS({\"OLT_0001\"},dim_olt[olt_key]))",
+    "expected": 14
+  },
+  {
+    "check": "OLT 1 / Inactive Services",
+    "expression": "CALCULATE([Inactive Services],TREATAS({\"OLT_0001\"},dim_olt[olt_key]))",
+    "expected": 9
+  },
+  {
+    "check": "OLT 1 / Active Service Share",
+    "expression": "CALCULATE([Active Service Share],TREATAS({\"OLT_0001\"},dim_olt[olt_key]))",
+    "expected": 0.9487750556792873
+  },
+  {
+    "check": "OLT 1 / Status Review Services",
+    "expression": "CALCULATE([Status Review Services],TREATAS({\"OLT_0001\"},dim_olt[olt_key]))",
+    "expected": 23
+  },
+  {
+    "check": "OLT 1 / Status Review Share",
+    "expression": "CALCULATE([Status Review Share],TREATAS({\"OLT_0001\"},dim_olt[olt_key]))",
+    "expected": 0.051224944320712694
+  },
+  {
+    "check": "OLT 1 / Inactive Only Keys",
+    "expression": "CALCULATE([Inactive Only Keys],TREATAS({\"OLT_0001\"},dim_olt[olt_key]))",
+    "expected": 6
+  },
+  {
+    "check": "OLT 1 / Monthly Listed Exposure",
+    "expression": "CALCULATE([Monthly Listed Exposure],TREATAS({\"OLT_0001\"},dim_olt[olt_key]))",
+    "expected": 1131925.0
+  },
+  {
+    "check": "OLT 1 / Listed Exposure In Period",
+    "expression": "CALCULATE([Listed Exposure In Period],TREATAS({\"OLT_0001\"},dim_olt[olt_key]))",
+    "expected": null
+  },
+  {
+    "check": "OLT 1 / Service State Index",
+    "expression": "CALCULATE([Service State Index],TREATAS({\"OLT_0001\"},dim_olt[olt_key]))",
+    "expected": 0.9643652561247216
+  },
+  {
+    "check": "OLT 1 / Date Withheld Records",
+    "expression": "CALCULATE([Date Withheld Records],TREATAS({\"OLT_0001\"},dim_olt[olt_key]))",
+    "expected": 449
+  },
+  {
+    "check": "OLT 1 / Legacy Future Dates",
+    "expression": "CALCULATE([Legacy Future Dates],TREATAS({\"OLT_0001\"},dim_olt[olt_key]))",
+    "expected": 284
+  },
+  {
+    "check": "OLT 1 / Current Future Dates",
+    "expression": "CALCULATE([Current Future Dates],TREATAS({\"OLT_0001\"},dim_olt[olt_key]))",
+    "expected": 0
+  },
+  {
+    "check": "OLT 1 / Unknown Period Records",
+    "expression": "CALCULATE([Unknown Period Records],TREATAS({\"OLT_0001\"},dim_olt[olt_key]))",
+    "expected": 12
+  },
+  {
+    "check": "OLT 1 / Quality Review Records",
+    "expression": "CALCULATE([Quality Review Records],TREATAS({\"OLT_0001\"},dim_olt[olt_key]))",
+    "expected": 12
+  },
+  {
+    "check": "OLT 1 / Valid Tenure Records",
+    "expression": "CALCULATE([Valid Tenure Records],TREATAS({\"OLT_0001\"},dim_olt[olt_key]))",
+    "expected": null
+  },
+  {
+    "check": "Monthly / Service Records",
+    "expression": "CALCULATE([Service Records],TREATAS({\"MONTHLY\"},dim_plan[plan_period]))",
+    "expected": 1188
+  },
+  {
+    "check": "Monthly / Customer Keys",
+    "expression": "CALCULATE([Customer Keys],TREATAS({\"MONTHLY\"},dim_plan[plan_period]))",
+    "expected": 1111
+  },
+  {
+    "check": "Monthly / OLT Groups",
+    "expression": "CALCULATE([OLT Groups],TREATAS({\"MONTHLY\"},dim_plan[plan_period]))",
+    "expected": 12
+  },
+  {
+    "check": "Monthly / Active Services",
+    "expression": "CALCULATE([Active Services],TREATAS({\"MONTHLY\"},dim_plan[plan_period]))",
+    "expected": 1123
+  },
+  {
+    "check": "Monthly / Partial Services",
+    "expression": "CALCULATE([Partial Services],TREATAS({\"MONTHLY\"},dim_plan[plan_period]))",
+    "expected": 39
+  },
+  {
+    "check": "Monthly / Inactive Services",
+    "expression": "CALCULATE([Inactive Services],TREATAS({\"MONTHLY\"},dim_plan[plan_period]))",
+    "expected": 26
+  },
+  {
+    "check": "Monthly / Active Service Share",
+    "expression": "CALCULATE([Active Service Share],TREATAS({\"MONTHLY\"},dim_plan[plan_period]))",
+    "expected": 0.9452861952861953
+  },
+  {
+    "check": "Monthly / Status Review Services",
+    "expression": "CALCULATE([Status Review Services],TREATAS({\"MONTHLY\"},dim_plan[plan_period]))",
+    "expected": 65
+  },
+  {
+    "check": "Monthly / Status Review Share",
+    "expression": "CALCULATE([Status Review Share],TREATAS({\"MONTHLY\"},dim_plan[plan_period]))",
+    "expected": 0.054713804713804715
+  },
+  {
+    "check": "Monthly / Inactive Only Keys",
+    "expression": "CALCULATE([Inactive Only Keys],TREATAS({\"MONTHLY\"},dim_plan[plan_period]))",
+    "expected": 20
+  },
+  {
+    "check": "Monthly / Monthly Listed Exposure",
+    "expression": "CALCULATE([Monthly Listed Exposure],TREATAS({\"MONTHLY\"},dim_plan[plan_period]))",
+    "expected": 2956272.0
+  },
+  {
+    "check": "Monthly / Listed Exposure In Period",
+    "expression": "CALCULATE([Listed Exposure In Period],TREATAS({\"MONTHLY\"},dim_plan[plan_period]))",
+    "expected": 2956272.0
+  },
+  {
+    "check": "Monthly / Service State Index",
+    "expression": "CALCULATE([Service State Index],TREATAS({\"MONTHLY\"},dim_plan[plan_period]))",
+    "expected": 0.9617003367003367
+  },
+  {
+    "check": "Monthly / Date Withheld Records",
+    "expression": "CALCULATE([Date Withheld Records],TREATAS({\"MONTHLY\"},dim_plan[plan_period]))",
+    "expected": 1188
+  },
+  {
+    "check": "Monthly / Legacy Future Dates",
+    "expression": "CALCULATE([Legacy Future Dates],TREATAS({\"MONTHLY\"},dim_plan[plan_period]))",
+    "expected": 740
+  },
+  {
+    "check": "Monthly / Current Future Dates",
+    "expression": "CALCULATE([Current Future Dates],TREATAS({\"MONTHLY\"},dim_plan[plan_period]))",
+    "expected": 0
+  },
+  {
+    "check": "Monthly / Unknown Period Records",
+    "expression": "CALCULATE([Unknown Period Records],TREATAS({\"MONTHLY\"},dim_plan[plan_period]))",
+    "expected": 0
+  },
+  {
+    "check": "Monthly / Quality Review Records",
+    "expression": "CALCULATE([Quality Review Records],TREATAS({\"MONTHLY\"},dim_plan[plan_period]))",
+    "expected": 0
+  },
+  {
+    "check": "Monthly / Valid Tenure Records",
+    "expression": "CALCULATE([Valid Tenure Records],TREATAS({\"MONTHLY\"},dim_plan[plan_period]))",
+    "expected": null
+  },
+  {
+    "check": "Annual / Service Records",
+    "expression": "CALCULATE([Service Records],TREATAS({\"ANNUALLY\"},dim_plan[plan_period]))",
+    "expected": 6
+  },
+  {
+    "check": "Annual / Customer Keys",
+    "expression": "CALCULATE([Customer Keys],TREATAS({\"ANNUALLY\"},dim_plan[plan_period]))",
+    "expected": 6
+  },
+  {
+    "check": "Annual / OLT Groups",
+    "expression": "CALCULATE([OLT Groups],TREATAS({\"ANNUALLY\"},dim_plan[plan_period]))",
+    "expected": 4
+  },
+  {
+    "check": "Annual / Active Services",
+    "expression": "CALCULATE([Active Services],TREATAS({\"ANNUALLY\"},dim_plan[plan_period]))",
+    "expected": 6
+  },
+  {
+    "check": "Annual / Partial Services",
+    "expression": "CALCULATE([Partial Services],TREATAS({\"ANNUALLY\"},dim_plan[plan_period]))",
+    "expected": 0
+  },
+  {
+    "check": "Annual / Inactive Services",
+    "expression": "CALCULATE([Inactive Services],TREATAS({\"ANNUALLY\"},dim_plan[plan_period]))",
+    "expected": 0
+  },
+  {
+    "check": "Annual / Active Service Share",
+    "expression": "CALCULATE([Active Service Share],TREATAS({\"ANNUALLY\"},dim_plan[plan_period]))",
+    "expected": 1.0
+  },
+  {
+    "check": "Annual / Status Review Services",
+    "expression": "CALCULATE([Status Review Services],TREATAS({\"ANNUALLY\"},dim_plan[plan_period]))",
+    "expected": 0
+  },
+  {
+    "check": "Annual / Status Review Share",
+    "expression": "CALCULATE([Status Review Share],TREATAS({\"ANNUALLY\"},dim_plan[plan_period]))",
+    "expected": 0.0
+  },
+  {
+    "check": "Annual / Inactive Only Keys",
+    "expression": "CALCULATE([Inactive Only Keys],TREATAS({\"ANNUALLY\"},dim_plan[plan_period]))",
+    "expected": 0
+  },
+  {
+    "check": "Annual / Monthly Listed Exposure",
+    "expression": "CALCULATE([Monthly Listed Exposure],TREATAS({\"ANNUALLY\"},dim_plan[plan_period]))",
+    "expected": null
+  },
+  {
+    "check": "Annual / Listed Exposure In Period",
+    "expression": "CALCULATE([Listed Exposure In Period],TREATAS({\"ANNUALLY\"},dim_plan[plan_period]))",
+    "expected": 42088.0
+  },
+  {
+    "check": "Annual / Service State Index",
+    "expression": "CALCULATE([Service State Index],TREATAS({\"ANNUALLY\"},dim_plan[plan_period]))",
+    "expected": 1.0
+  },
+  {
+    "check": "Annual / Date Withheld Records",
+    "expression": "CALCULATE([Date Withheld Records],TREATAS({\"ANNUALLY\"},dim_plan[plan_period]))",
+    "expected": 6
+  },
+  {
+    "check": "Annual / Legacy Future Dates",
+    "expression": "CALCULATE([Legacy Future Dates],TREATAS({\"ANNUALLY\"},dim_plan[plan_period]))",
+    "expected": 3
+  },
+  {
+    "check": "Annual / Current Future Dates",
+    "expression": "CALCULATE([Current Future Dates],TREATAS({\"ANNUALLY\"},dim_plan[plan_period]))",
+    "expected": 0
+  },
+  {
+    "check": "Annual / Unknown Period Records",
+    "expression": "CALCULATE([Unknown Period Records],TREATAS({\"ANNUALLY\"},dim_plan[plan_period]))",
+    "expected": 0
+  },
+  {
+    "check": "Annual / Quality Review Records",
+    "expression": "CALCULATE([Quality Review Records],TREATAS({\"ANNUALLY\"},dim_plan[plan_period]))",
+    "expected": 0
+  },
+  {
+    "check": "Annual / Valid Tenure Records",
+    "expression": "CALCULATE([Valid Tenure Records],TREATAS({\"ANNUALLY\"},dim_plan[plan_period]))",
+    "expected": null
+  },
+  {
+    "check": "Inactive / Service Records",
+    "expression": "CALCULATE([Service Records],TREATAS({\"inactive\"},dim_service_state[service_status]))",
+    "expected": 29
+  },
+  {
+    "check": "Inactive / Customer Keys",
+    "expression": "CALCULATE([Customer Keys],TREATAS({\"inactive\"},dim_service_state[service_status]))",
+    "expected": 26
+  },
+  {
+    "check": "Inactive / OLT Groups",
+    "expression": "CALCULATE([OLT Groups],TREATAS({\"inactive\"},dim_service_state[service_status]))",
+    "expected": 7
+  },
+  {
+    "check": "Inactive / Active Services",
+    "expression": "CALCULATE([Active Services],TREATAS({\"inactive\"},dim_service_state[service_status]))",
+    "expected": 0
+  },
+  {
+    "check": "Inactive / Partial Services",
+    "expression": "CALCULATE([Partial Services],TREATAS({\"inactive\"},dim_service_state[service_status]))",
+    "expected": 0
+  },
+  {
+    "check": "Inactive / Inactive Services",
+    "expression": "CALCULATE([Inactive Services],TREATAS({\"inactive\"},dim_service_state[service_status]))",
+    "expected": 29
+  },
+  {
+    "check": "Inactive / Active Service Share",
+    "expression": "CALCULATE([Active Service Share],TREATAS({\"inactive\"},dim_service_state[service_status]))",
+    "expected": 0.0
+  },
+  {
+    "check": "Inactive / Status Review Services",
+    "expression": "CALCULATE([Status Review Services],TREATAS({\"inactive\"},dim_service_state[service_status]))",
+    "expected": 29
+  },
+  {
+    "check": "Inactive / Status Review Share",
+    "expression": "CALCULATE([Status Review Share],TREATAS({\"inactive\"},dim_service_state[service_status]))",
+    "expected": 1.0
+  },
+  {
+    "check": "Inactive / Inactive Only Keys",
+    "expression": "CALCULATE([Inactive Only Keys],TREATAS({\"inactive\"},dim_service_state[service_status]))",
+    "expected": 22
+  },
+  {
+    "check": "Inactive / Monthly Listed Exposure",
+    "expression": "CALCULATE([Monthly Listed Exposure],TREATAS({\"inactive\"},dim_service_state[service_status]))",
+    "expected": null
+  },
+  {
+    "check": "Inactive / Listed Exposure In Period",
+    "expression": "CALCULATE([Listed Exposure In Period],TREATAS({\"inactive\"},dim_service_state[service_status]))",
+    "expected": null
+  },
+  {
+    "check": "Inactive / Service State Index",
+    "expression": "CALCULATE([Service State Index],TREATAS({\"inactive\"},dim_service_state[service_status]))",
+    "expected": 0.0
+  },
+  {
+    "check": "Inactive / Date Withheld Records",
+    "expression": "CALCULATE([Date Withheld Records],TREATAS({\"inactive\"},dim_service_state[service_status]))",
+    "expected": 29
+  },
+  {
+    "check": "Inactive / Legacy Future Dates",
+    "expression": "CALCULATE([Legacy Future Dates],TREATAS({\"inactive\"},dim_service_state[service_status]))",
+    "expected": 16
+  },
+  {
+    "check": "Inactive / Current Future Dates",
+    "expression": "CALCULATE([Current Future Dates],TREATAS({\"inactive\"},dim_service_state[service_status]))",
+    "expected": 0
+  },
+  {
+    "check": "Inactive / Unknown Period Records",
+    "expression": "CALCULATE([Unknown Period Records],TREATAS({\"inactive\"},dim_service_state[service_status]))",
+    "expected": 2
+  },
+  {
+    "check": "Inactive / Quality Review Records",
+    "expression": "CALCULATE([Quality Review Records],TREATAS({\"inactive\"},dim_service_state[service_status]))",
+    "expected": 2
+  },
+  {
+    "check": "Inactive / Valid Tenure Records",
+    "expression": "CALCULATE([Valid Tenure Records],TREATAS({\"inactive\"},dim_service_state[service_status]))",
+    "expected": null
+  },
+  {
+    "check": "OLT 1 Monthly / Service Records",
+    "expression": "CALCULATE([Service Records],TREATAS({\"OLT_0001\"},dim_olt[olt_key]),TREATAS({\"MONTHLY\"},dim_plan[plan_period]))",
+    "expected": 424
+  },
+  {
+    "check": "OLT 1 Monthly / Customer Keys",
+    "expression": "CALCULATE([Customer Keys],TREATAS({\"OLT_0001\"},dim_olt[olt_key]),TREATAS({\"MONTHLY\"},dim_plan[plan_period]))",
+    "expected": 404
+  },
+  {
+    "check": "OLT 1 Monthly / OLT Groups",
+    "expression": "CALCULATE([OLT Groups],TREATAS({\"OLT_0001\"},dim_olt[olt_key]),TREATAS({\"MONTHLY\"},dim_plan[plan_period]))",
+    "expected": 1
+  },
+  {
+    "check": "OLT 1 Monthly / Active Services",
+    "expression": "CALCULATE([Active Services],TREATAS({\"OLT_0001\"},dim_olt[olt_key]),TREATAS({\"MONTHLY\"},dim_plan[plan_period]))",
+    "expected": 402
+  },
+  {
+    "check": "OLT 1 Monthly / Partial Services",
+    "expression": "CALCULATE([Partial Services],TREATAS({\"OLT_0001\"},dim_olt[olt_key]),TREATAS({\"MONTHLY\"},dim_plan[plan_period]))",
+    "expected": 14
+  },
+  {
+    "check": "OLT 1 Monthly / Inactive Services",
+    "expression": "CALCULATE([Inactive Services],TREATAS({\"OLT_0001\"},dim_olt[olt_key]),TREATAS({\"MONTHLY\"},dim_plan[plan_period]))",
+    "expected": 8
+  },
+  {
+    "check": "OLT 1 Monthly / Active Service Share",
+    "expression": "CALCULATE([Active Service Share],TREATAS({\"OLT_0001\"},dim_olt[olt_key]),TREATAS({\"MONTHLY\"},dim_plan[plan_period]))",
+    "expected": 0.9481132075471698
+  },
+  {
+    "check": "OLT 1 Monthly / Status Review Services",
+    "expression": "CALCULATE([Status Review Services],TREATAS({\"OLT_0001\"},dim_olt[olt_key]),TREATAS({\"MONTHLY\"},dim_plan[plan_period]))",
+    "expected": 22
+  },
+  {
+    "check": "OLT 1 Monthly / Status Review Share",
+    "expression": "CALCULATE([Status Review Share],TREATAS({\"OLT_0001\"},dim_olt[olt_key]),TREATAS({\"MONTHLY\"},dim_plan[plan_period]))",
+    "expected": 0.05188679245283019
+  },
+  {
+    "check": "OLT 1 Monthly / Inactive Only Keys",
+    "expression": "CALCULATE([Inactive Only Keys],TREATAS({\"OLT_0001\"},dim_olt[olt_key]),TREATAS({\"MONTHLY\"},dim_plan[plan_period]))",
+    "expected": 6
+  },
+  {
+    "check": "OLT 1 Monthly / Monthly Listed Exposure",
+    "expression": "CALCULATE([Monthly Listed Exposure],TREATAS({\"OLT_0001\"},dim_olt[olt_key]),TREATAS({\"MONTHLY\"},dim_plan[plan_period]))",
+    "expected": 1131925.0
+  },
+  {
+    "check": "OLT 1 Monthly / Listed Exposure In Period",
+    "expression": "CALCULATE([Listed Exposure In Period],TREATAS({\"OLT_0001\"},dim_olt[olt_key]),TREATAS({\"MONTHLY\"},dim_plan[plan_period]))",
+    "expected": 1131925.0
+  },
+  {
+    "check": "OLT 1 Monthly / Service State Index",
+    "expression": "CALCULATE([Service State Index],TREATAS({\"OLT_0001\"},dim_olt[olt_key]),TREATAS({\"MONTHLY\"},dim_plan[plan_period]))",
+    "expected": 0.964622641509434
+  },
+  {
+    "check": "OLT 1 Monthly / Date Withheld Records",
+    "expression": "CALCULATE([Date Withheld Records],TREATAS({\"OLT_0001\"},dim_olt[olt_key]),TREATAS({\"MONTHLY\"},dim_plan[plan_period]))",
+    "expected": 424
+  },
+  {
+    "check": "OLT 1 Monthly / Legacy Future Dates",
+    "expression": "CALCULATE([Legacy Future Dates],TREATAS({\"OLT_0001\"},dim_olt[olt_key]),TREATAS({\"MONTHLY\"},dim_plan[plan_period]))",
+    "expected": 265
+  },
+  {
+    "check": "OLT 1 Monthly / Current Future Dates",
+    "expression": "CALCULATE([Current Future Dates],TREATAS({\"OLT_0001\"},dim_olt[olt_key]),TREATAS({\"MONTHLY\"},dim_plan[plan_period]))",
+    "expected": 0
+  },
+  {
+    "check": "OLT 1 Monthly / Unknown Period Records",
+    "expression": "CALCULATE([Unknown Period Records],TREATAS({\"OLT_0001\"},dim_olt[olt_key]),TREATAS({\"MONTHLY\"},dim_plan[plan_period]))",
+    "expected": 0
+  },
+  {
+    "check": "OLT 1 Monthly / Quality Review Records",
+    "expression": "CALCULATE([Quality Review Records],TREATAS({\"OLT_0001\"},dim_olt[olt_key]),TREATAS({\"MONTHLY\"},dim_plan[plan_period]))",
+    "expected": 0
+  },
+  {
+    "check": "OLT 1 Monthly / Valid Tenure Records",
+    "expression": "CALCULATE([Valid Tenure Records],TREATAS({\"OLT_0001\"},dim_olt[olt_key]),TREATAS({\"MONTHLY\"},dim_plan[plan_period]))",
+    "expected": null
+  }
+]

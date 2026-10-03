@@ -1,0 +1,31 @@
+table dim_customer
+	lineageTag: ad152a9e-7e42-4daa-8fa3-2b685ebcf67b
+
+	column customer_key
+		dataType: string
+		lineageTag: b55cda61-3b83-4555-b01d-592a14272e7a
+		summarizeBy: none
+		sourceColumn: customer_key
+
+	column customer_type
+		dataType: string
+		lineageTag: 358cd828-5358-4483-b55b-3f0267056383
+		summarizeBy: none
+		sourceColumn: customer_type
+
+	column connection_count
+		dataType: int64
+		lineageTag: 7928e578-6453-4c31-ba82-31d022a27492
+		summarizeBy: none
+		sourceColumn: connection_count
+
+	partition dim_customer = m
+		mode: import
+		source =
+				let
+				 Source = Csv.Document(File.Contents(DataRoot & "dim_customer.csv"),[Delimiter=",",Encoding=65001,QuoteStyle=QuoteStyle.Csv]),
+				 Headers = Table.PromoteHeaders(Source,[PromoteAllScalars=true]),
+				 Nulls = Table.ReplaceValue(Headers,"",null,Replacer.ReplaceValue,Table.ColumnNames(Headers)),
+				 Typed = Table.TransformColumnTypes(Nulls,{{"customer_key", type text},{"customer_type", type text},{"connection_count", Int64.Type}},"en-US")
+				in Typed
+

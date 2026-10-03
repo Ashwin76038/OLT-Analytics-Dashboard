@@ -1,0 +1,55 @@
+table dim_service_state
+	lineageTag: 720e6333-a208-4dea-82a9-ffd7c53321cb
+
+	column service_state_key
+		dataType: string
+		lineageTag: bea55d39-d732-4df1-9084-ae02aec7950e
+		summarizeBy: none
+		sourceColumn: service_state_key
+
+	column service_status
+		dataType: string
+		lineageTag: 482bc0b4-b6b5-40cd-a8db-5ba18ed2ea0d
+		summarizeBy: none
+		sourceColumn: service_status
+
+	column is_revenue_generating
+		dataType: int64
+		lineageTag: 3d16f328-3a58-46ec-b862-4f3670c89d0a
+		summarizeBy: none
+		sourceColumn: is_revenue_generating
+
+	column network_quality_indicator
+		dataType: string
+		lineageTag: 5646b2dd-6831-4448-9277-96ed346df281
+		summarizeBy: none
+		sourceColumn: network_quality_indicator
+
+	column risk_level
+		dataType: string
+		lineageTag: 1d2bf6f4-f30a-4b7a-a486-138c10c66f4c
+		summarizeBy: none
+		sourceColumn: risk_level
+
+	column risk_reason
+		dataType: string
+		lineageTag: 6158e495-8168-4fa8-9681-ea6ead159ead
+		summarizeBy: none
+		sourceColumn: risk_reason
+
+	column olt_performance_weight
+		dataType: double
+		lineageTag: dd249912-7f2b-4187-82e7-07dcb5d0c8a5
+		summarizeBy: none
+		sourceColumn: olt_performance_weight
+
+	partition dim_service_state = m
+		mode: import
+		source =
+				let
+				 Source = Csv.Document(File.Contents(DataRoot & "dim_service_state.csv"),[Delimiter=",",Encoding=65001,QuoteStyle=QuoteStyle.Csv]),
+				 Headers = Table.PromoteHeaders(Source,[PromoteAllScalars=true]),
+				 Nulls = Table.ReplaceValue(Headers,"",null,Replacer.ReplaceValue,Table.ColumnNames(Headers)),
+				 Typed = Table.TransformColumnTypes(Nulls,{{"service_state_key", type text},{"service_status", type text},{"is_revenue_generating", Int64.Type},{"network_quality_indicator", type text},{"risk_level", type text},{"risk_reason", type text},{"olt_performance_weight", type number}},"en-US")
+				in Typed
+

@@ -1,79 +1,45 @@
 # Telecom OLT Service Analytics
 
-Analyze service activity and plan exposure to prioritize ISP operational review.
+A reproducible service-status and data-quality portfolio project using a sanitized snapshot, Python, MySQL and a validated Power BI report.
 
-![Public-data analytical overview](images/01-service-overview.png)
+![Validated Desktop service overview](dashboard/screenshots/service-overview.png)
 
-*Reproducible Python figure; Power BI refresh remains pending.*
+## Findings
 
-## Executive summary
+- **1,280 service rows / 1,193 grouped customer keys**: use the correct grain for every denominator. Keys represent normalized source labels, not verified people.
+- **1,210 active (94.53%), 41 partial-active and 29 inactive services**: prioritize 70 status-review records. Inactivity is not historical churn.
+- **1,275 earlier prepared activation dates differed from the original**; 810 were beyond the assumed reference date, versus zero in the original. All 1,280 public dates and tenure values are now withheld. Historical flags remain visible; no cohort claims are made.
 
-The published snapshot contains **1,280 service records**, **1,193 customer keys**, and **12 OLTs**. It supports service-status monitoring and data-quality investigation. It does not measure historical churn or physical network utilization.
+There are 12 source-address groups, not a verified physical OLT inventory. Monthly active/partial listed fee exposure is **2,956,272 undisclosed units** across monthly plans. Amounts are compared within their listed period; they are not recognized revenue or verified MRR. There are 58 unspecified plan periods and 22 inactive-only grouped customer keys.
 
-## Business questions
+## Implemented and tested
 
-- Where are partial-active and inactive services concentrated?
-- How does service status vary by plan and OLT?
-- Which date records cannot support tenure analysis?
-- Which OLT status rates warrant investigation?
+The editable [Power BI project](dashboard/OLT_Service_Project/OLT_Service_Analytics.pbip) contains Service overview, OLT & plan review, and Data quality pages. On **1 October 2026**, it was refreshed and saved in Desktop: **114/114 DAX checks passed**, covering 19 measures across six filter contexts. All three pages rendered; an OLT slicer and reset reconciled cards and charts. [Execution evidence and screenshots](docs/powerbi_validation.md).
 
-## Verified findings
+Native **MySQL 8.0.46 passed seven KPI checks** against independent pandas totals. SQLite scripts are supplementary audits; the author's original SQL platform is MySQL. Python tests cover grain, keys, privacy, source reconciliation and date exclusions. [MySQL receipt](docs/mysql_validation.json).
 
-| Finding | Evidence | Operational action |
-|---|---|---|
-| Most services are active | 1,210 / 1,280 (94.53%) | Monitor status changes in later snapshots |
-| 70 service records need status review | 41 partial-active, 29 inactive | Reconcile service status with support and billing records |
-| Tenure has substantial missing coverage | 810 / 1,280 reported activation dates fall after the supplied snapshot date | Resolve source date semantics before cohort analysis |
-| Service rows differ from customers | 1,280 records versus 1,193 normalized customer keys | Use service denominators for status shares and distinct keys for customer counts |
-
-Recompute these values with `python scripts/analyze_public.py`; evidence is saved in [validated_metrics.json](docs/validated_metrics.json).
-
-## Dataset and privacy
-
-The supplied operational-style extract has been transformed into public surrogate-key tables. Independent provenance and customer identity matching remain unverified. Public datasets included in this repository have been sanitized to remove direct customer identifiers. This does not guarantee protection against external linkage.
-
-Legacy screenshots, SQL exports and the unrelated sample workbook were removed from the current tree and preserved privately for review. Earlier Git history may retain them. A refreshed privacy-reviewed Power BI screenshot is still needed; no old image is presented as the current model.
-
-## Tools and model
-
-Python, pandas, NumPy, SQL and Power BI DAX. One service snapshot fact joins customer, OLT, plan, service-state and date dimensions using one-to-many, single-direction relationships. See [model and field definitions](data/powerbi_star_schema/relationships_and_model.md), [data dictionary](docs/data_dictionary.md), and [methodology](docs/methodology.md).
-
-## KPI definitions
-
-| KPI | Formula | Interpretation |
-|---|---|---|
-| Service records | Row count | Snapshot service observations |
-| Customer keys | Distinct customer_key | Grouped source labels; not independently verified people |
-| Active service share | Active rows / all service rows | Status composition |
-| Inactive-only customer share | Customers with no active/partial service and at least one inactive service / customers in context | Snapshot inactivity, not churn |
-| Listed fee exposure | Sum of listed fees on active/partial services | Not verified MRR or collections |
-| Partial-active listed fees | Sum of fees on partial-active records | Potential exposure, not demonstrated loss |
-| Service-state index | Mean of status weights 1 / 0.5 / 0 | Operational status proxy, not telemetry |
-
-## Reproduce
+## Reproduce from a clean clone
 
 ```bash
 python -m pip install -r requirements.txt
 python -m unittest discover -s tests -v
-python scripts/render_overview.py
 python scripts/analyze_public.py
-python anomaly_detection.py
+python scripts/audit_public.py
+python scripts/analyze_plan_periods.py
+python scripts/build_dax_validation.py
+python scripts/configure_powerbi.py
 ```
 
-Optional private-source rebuild: `python scripts/build_powerbi_star_schema.py --source customers.csv --as-of-date 2026-09-12`. Never commit the private source. Public analysis works without it.
+Open the PBIP, refresh, and execute `docs/validate_measures.dax` in DAX query view. Expect Checks=114, Passed=114 and empty Failures. [Detailed refresh guide](docs/powerbi_validation.md) and [native MySQL instructions](docs/sql_engine_notes.md).
 
-For Power BI, import the six model CSVs and follow the relationship guide. The legacy filename [churn_kpi_measures.dax](data/powerbi_star_schema/churn_kpi_measures.dax) now contains status-based measure names. SQL Server DDL is in `sql/`; the SQLite evidence script is executable without a server.
+The public clone needs no confidential workbook or portal connection. It reproduces the frozen analytical inputs, not the confidential original extraction. Exact dates, contacts and source OLT addresses must not be added to Git; local `.pbi` caches are ignored. Earlier repository history may retain legacy artifacts.
 
-## Limitations and next steps
+## Provenance and limits
 
-Verify source authenticity, billing periods and customer grouping; repair activation dates; obtain cancellation events and interval network telemetry; then refresh a reviewed Power BI report. No causal, churn-prediction or revenue-impact claim is supported.
+The author supplied a confidential government-platform workbook privately and confirmed Activation Date means internet-service activation, and that listed amounts relate to the supplied plan periods. The original 1,320 rows contain 1,280 Combo-service rows; fee/plan/status/OLT/customer grouping corroborates their correspondence. The transformation that changed the earlier prepared dates is unknown. [Before/after source evidence](docs/source_workbook_review.md).
 
-## Repository structure
+The reference date **2026-09-12 is an analyst assumption**, not a verified export date. A/D/E status mappings are analytical assumptions. Currency and portal definitions are undisclosed. No real churn, network utilization, causal impact or customer-retention improvement is established. Sequential keys cannot be joined to independently generated future extracts: [stable pseudonymous-key policy](docs/source_and_key_contract.md).
 
-- `data/powerbi_star_schema/`: public model tables and DAX
-- `scripts/`: private-source ETL and public SQL evidence
-- `sql/`: SQL Server schema
-- `tests/`: relationship, privacy and date checks
-- `docs/`: methodology, dictionary and verified metrics
+## Review and interview
 
-Skills demonstrated: data cleaning, grain validation, dimensional modeling, SQL aggregation, DAX design and operational analysis.
+[Portfolio review](docs/portfolio_review.md) provides changed-file groups, before/after evidence, an interview story and the scoped readiness assessment. [Dictionary](docs/data_dictionary.md), [model](data/powerbi_star_schema/relationships_and_model.md), [methodology](docs/methodology.md) and [date policy](docs/date_publication_policy.md) document definitions.

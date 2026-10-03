@@ -1,0 +1,31 @@
+{
+  "source_kind": "sanitized frozen customer attributes",
+  "native_validation": "Desktop refreshed and saved 2026-10-01; 114/114 DAX checks; see docs/powerbi_validation.md",
+  "measures": [
+    "Service Records",
+    "Customer Keys",
+    "OLT Groups",
+    "Active Services",
+    "Partial Services",
+    "Inactive Services",
+    "Active Service Share",
+    "Status Review Services",
+    "Status Review Share",
+    "Inactive Only Keys",
+    "Monthly Listed Exposure",
+    "Listed Exposure In Period",
+    "Service State Index",
+    "Date Withheld Records",
+    "Legacy Future Dates",
+    "Current Future Dates",
+    "Unknown Period Records",
+    "Quality Review Records",
+    "Valid Tenure Records"
+  ],
+  "pages": [
+    "Service overview",
+    "OLT & plan review",
+    "Data quality"
+  ],
+  "data_root_parameter": "set DataRoot to this checkout data folder before refresh"
+}

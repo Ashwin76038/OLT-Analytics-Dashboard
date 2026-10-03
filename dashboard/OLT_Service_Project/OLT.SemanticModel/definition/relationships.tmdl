@@ -1,0 +1,20 @@
+relationship 7f94904c-9519-45ae-abe5-a225b7f3d2b7
+	fromColumn: fact_customer_service.customer_key
+	toColumn: dim_customer.customer_key
+
+relationship dfe17c37-f648-4d06-b678-643e4f8cc298
+	fromColumn: fact_customer_service.olt_key
+	toColumn: dim_olt.olt_key
+
+relationship 6f12a519-8f7a-4a66-9298-7ee1f4a78b74
+	fromColumn: fact_customer_service.plan_key
+	toColumn: dim_plan.plan_key
+
+relationship 62dfb9f1-8a06-4a5e-9001-2a713ced3b7c
+	fromColumn: fact_customer_service.service_state_key
+	toColumn: dim_service_state.service_state_key
+
+relationship 43cff59b-467d-4d78-b23c-8bb0d916b12c
+	fromColumn: fact_customer_service.snapshot_date_key
+	toColumn: dim_date.date_key
+
