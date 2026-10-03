@@ -24,3 +24,7 @@
 ## Before / after and limitations
 
 See `public_quality_review.md` for numeric before/after evidence and `powerbi_validation.md` for executed checks. The former candidate report is now refreshed, saved and visually reviewed in Desktop. Missing confidential export/status/currency definitions remain documented assumptions; exact dates stay private. Original extraction and transformation are not fully reproducible publicly. Future snapshots require approved stable IDs and controlled pseudonymization. No measured business impact is claimed.
+
+## Public reproduction check
+
+On 3 October 2026, five reproduction commands passed from a Git archive containing only tracked files, including all 15 unit tests. No ignored private workbook or Desktop cache was available. See `clean_clone_validation.json`; installed Python dependencies were reused.

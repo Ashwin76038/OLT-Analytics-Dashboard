@@ -1,0 +1,28 @@
+{
+  "date": "2026-10-03",
+  "source": "Git HEAD archive; no ignored/private files or Desktop caches",
+  "source_commit": "5215971d21970bc7158fbd4e8bfb815f32d1dde0",
+  "checks": [
+    {
+      "command": "python -m unittest discover -s tests -v",
+      "status": "passed"
+    },
+    {
+      "command": "python scripts/analyze_public.py",
+      "status": "passed"
+    },
+    {
+      "command": "python scripts/analyze_plan_periods.py",
+      "status": "passed"
+    },
+    {
+      "command": "python scripts/audit_public.py",
+      "status": "passed"
+    },
+    {
+      "command": "python scripts/build_dax_validation.py",
+      "status": "passed"
+    }
+  ],
+  "limits": "Uses installed Python dependencies; not a new OS/environment install. DAX generator is not Desktop execution; see separate native validation receipt."
+}

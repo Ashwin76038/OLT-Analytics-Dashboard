@@ -10,7 +10,7 @@ The author identifies the workbook as a confidential government-platform export 
 
 ## Activation-date decision
 
-The author confirms that Activation Date means internet plan/service activation. Explicit day-first parsing of the original workbook yields dates from 1999-02-15 through 2026-08-29 and zero dates after the configured 2026-09-12 cutoff. In contrast, 810/1,280 public values are later than that cutoff, reaching 2028-11-30; 1,275 of 1,280 public dates differ from source under corroborated row-order comparison. The transformation responsible remains unresolved. The cutoff is model configuration, not a verified source snapshot date.
+The author confirms that Activation Date means internet plan/service activation. Explicit day-first parsing of the original workbook yields dates from 1999-02-15 through 2026-08-29 and zero dates after the configured 2026-09-12 cutoff. In the earlier prepared build, 810/1,280 values were later than that cutoff, reaching 2028-11-30; 1,275 of 1,280 earlier prepared dates differed from source under corroborated row-order comparison. The transformation responsible remains unresolved. The cutoff is model configuration, not a verified source snapshot date.
 
 All 1,280 public activation and tenure values are now withheld. The historical future flag preserves the 810 earlier prepared discrepancies without retaining their dates. Current missing-date flags mean public withholding, not missing original dates. Source dates were not silently substituted; aggregate historical and current receipts document the change. No public cohort or tenure claim is supported.
 
