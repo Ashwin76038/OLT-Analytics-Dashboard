@@ -4,7 +4,7 @@ Power BI analysis of a sanitized BSNL service snapshot, supported by Python and 
 
 ## Latest edited dashboard preview
 
-These six screenshots were captured from the actual BSNL_Network_Intelligence.pbix saved on 2 November 2026. The report combines the original 1,280-row service snapshot with a separate generated 180-day network scenario and an external churn benchmark. Network, complaint and cancellation metrics describe the simulated scenario. Benchmark figures refer to the external dataset.
+These six previews were rendered at 3,200 pixels wide from a native Power BI Desktop PDF export of the actual BSNL_Network_Intelligence.pbix on 24 November 2026. Click an image to inspect its full resolution. The report combines the original 1,280-row service snapshot with a separate generated 180-day network scenario and an external churn benchmark. Network, complaint and cancellation metrics describe the simulated scenario. Benchmark figures refer to the external dataset.
 
 The six-page report is currently a local portfolio deliverable. The versioned source and run instructions below reproduce the earlier service-status project. Publishing these screenshots alone does not provide the newer report's model or pipeline.
 
