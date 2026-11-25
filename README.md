@@ -1,4 +1,39 @@
-# Telecom OLT Service Analytics
+# BSNL FTTH / OLT Analytics
+
+Power BI analysis of a sanitized BSNL service snapshot, supported by Python and SQL validation, with a later local report exploring simulated network experience, cancellations and forecasting.
+
+## Latest edited dashboard preview
+
+These six previews were rendered at 3,200 pixels wide from a native Power BI Desktop PDF export of the actual BSNL_Network_Intelligence.pbix on 24 November 2026. Click an image to inspect its full resolution. The report combines the original 1,280-row service snapshot with a separate generated 180-day network scenario and an external churn benchmark. Network, complaint and cancellation metrics describe the simulated scenario. Benchmark figures refer to the external dataset.
+
+The six-page report is currently a local portfolio deliverable. The versioned source and run instructions below reproduce the earlier service-status project. Publishing these screenshots alone does not provide the newer report's model or pipeline.
+
+### Executive Overview
+
+![BSNL Executive Overview](assets/bsnl-executive-overview.png)
+
+### OLT & PON Performance
+
+![BSNL OLT & PON Performance](assets/bsnl-olt-pon-performance.png)
+
+### Customer Experience
+
+![BSNL Customer Experience](assets/bsnl-customer-experience.png)
+
+### Churn & Retention
+
+![BSNL Churn & Retention](assets/bsnl-churn-retention.png)
+
+### Network Forecasting
+
+![BSNL Network Forecasting](assets/bsnl-network-forecasting.png)
+
+### Data Quality & Provenance
+
+![BSNL Data Quality & Provenance](assets/bsnl-data-quality-provenance.png)
+
+## Reproducible service-status project
+
 
 A reproducible service-status and data-quality portfolio project using a sanitized snapshot, Python, MySQL and a validated Power BI report.
 
@@ -43,3 +78,7 @@ The reference date **2026-09-12 is an analyst assumption**, not a verified expor
 ## Review and interview
 
 [Portfolio review](docs/portfolio_review.md) provides changed-file groups, before/after evidence, an interview story and the scoped readiness assessment. [Dictionary](docs/data_dictionary.md), [model](data/powerbi_star_schema/relationships_and_model.md), [methodology](docs/methodology.md) and [date policy](docs/date_publication_policy.md) document definitions.
+
+## Author
+
+[Aswin S](https://github.com/Ashwin76038)
