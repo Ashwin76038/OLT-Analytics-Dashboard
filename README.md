@@ -1,36 +1,36 @@
-# BSNL FTTH / OLT Analytics
+# Father's ISP FTTH / OLT Analytics
 
-Power BI analysis of a sanitized BSNL service snapshot, supported by Python and SQL validation, with a later local report exploring simulated network experience, cancellations and forecasting.
+Power BI analysis of a sanitized Father's ISP service snapshot, supported by Python and SQL validation, with a later local report exploring simulated network experience, cancellations and forecasting.
 
 ## Latest edited dashboard preview
 
-These six previews were rendered at 3,200 pixels wide from a native Power BI Desktop PDF export of the actual BSNL_Network_Intelligence.pbix on 24 November 2026. Click an image to inspect its full resolution. The report combines the original 1,280-row service snapshot with a separate generated 180-day network scenario and an external churn benchmark. Network, complaint and cancellation metrics describe the simulated scenario. Benchmark figures refer to the external dataset.
+These six previews were rendered at 3,200 pixels wide from a native Power BI Desktop PDF export of the actual local six-page Power BI report on 24 November 2026. Click an image to inspect its full resolution. The report combines the original 1,280-row service snapshot with a separate generated 180-day network scenario and an external churn benchmark. Network, complaint and cancellation metrics describe the simulated scenario. Benchmark figures refer to the external dataset.
 
 The six-page report is currently a local portfolio deliverable. The versioned source and run instructions below reproduce the earlier service-status project. Publishing these screenshots alone does not provide the newer report's model or pipeline.
 
 ### Executive Overview
 
-![BSNL Executive Overview](assets/bsnl-executive-overview.png)
+![Father's ISP Executive Overview](assets/fathers-isp-executive-overview.png)
 
 ### OLT & PON Performance
 
-![BSNL OLT & PON Performance](assets/bsnl-olt-pon-performance.png)
+![Father's ISP OLT & PON Performance](assets/fathers-isp-olt-pon-performance.png)
 
 ### Customer Experience
 
-![BSNL Customer Experience](assets/bsnl-customer-experience.png)
+![Father's ISP Customer Experience](assets/fathers-isp-customer-experience.png)
 
 ### Churn & Retention
 
-![BSNL Churn & Retention](assets/bsnl-churn-retention.png)
+![Father's ISP Churn & Retention](assets/fathers-isp-churn-retention.png)
 
 ### Network Forecasting
 
-![BSNL Network Forecasting](assets/bsnl-network-forecasting.png)
+![Father's ISP Network Forecasting](assets/fathers-isp-network-forecasting.png)
 
 ### Data Quality & Provenance
 
-![BSNL Data Quality & Provenance](assets/bsnl-data-quality-provenance.png)
+![Father's ISP Data Quality & Provenance](assets/fathers-isp-data-quality-provenance.png)
 
 ## Reproducible service-status project
 
