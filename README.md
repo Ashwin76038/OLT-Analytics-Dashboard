@@ -2,9 +2,27 @@
 
 A Power BI portfolio project for reviewing broadband service records, network load, customer experience and data quality. Python and SQL support the data preparation and reconciliation; scenario-based pages demonstrate analysis where operational history is unavailable.
 
+## Problem and analytical questions
+
+Which services need review, how do plans and OLT groups differ, and which data gaps prevent reliable operational conclusions? The service snapshot supports status and plan analysis; simulated history and an external benchmark support separate demonstrations of network and churn analysis.
+
+## Key findings
+
+| Finding | Meaning |
+|---|---|
+| 1,280 service records; 1,193 normalized label groups | Records and grouped labels have different grains; groups are not verified unique people. |
+| 1,210 active services (94.53%); 41 partial-active; 29 inactive | The assumed status mapping identifies 70 records for review. Inactivity is not historical churn. |
+| 58 records with unspecified plan periods | Listed fees cannot all be treated as monthly recurring revenue. |
+| 1,280 exact activation dates withheld | Public analysis does not infer original tenure or activation cohorts. |
+| 12 source-address groups | These are not a verified inventory of physical OLT devices. |
+
+The current report displays 31.6% daily utilization, 43.0% peak-hour congestion, 99.77% availability, 1,068 complaints and 22 cancellations **within its generated scenario**. Its 3,150-customer churn benchmark is a separate population. These figures do not establish actual ISP congestion, churn prediction accuracy or realized business improvements.
+
+Monthly active/partial listed fee exposure is 2,956,272 undisclosed units across monthly plans. It is neither recognized revenue nor verified MRR. Earlier source reconciliation found 1,275 changed prepared activation dates and 810 dates beyond the assumed reference date; historical flags are retained. See the [plan-period and source documentation](docs/source_workbook_review.md).
+
 ## Dashboard preview
 
-The current six-page report uses the established dark-purple design, business-field filters and a mix of trend, comparison, distribution and detail visuals. These are actual Power BI Desktop exports rendered at 3,200 pixels wide. Click an image for the full-resolution view.
+Six report pages explore service status, network performance, customer experience and data quality.
 
 ### Executive Overview
 
@@ -30,7 +48,7 @@ The current six-page report uses the established dark-purple design, business-fi
 
 ![Father's ISP Data Quality & Provenance](assets/fathers-isp-data-quality-provenance.png)
 
-## What the project answers
+## Report questions and data sources
 
 | Report page | Analytical purpose | Data scope |
 |---|---|---|
@@ -41,7 +59,7 @@ The current six-page report uses the established dark-purple design, business-fi
 | Network Forecasting | Compare actual scenario demand with model predictions | Scenario-based forecasting |
 | Data Quality & Provenance | Inspect withheld dates, unknown plan periods and mapping conflicts | Snapshot and source-compatibility checks |
 
-## Implemented work
+## How the analysis was built
 
 - Organized public service inputs into a six-table star schema with explicit fact and dimension keys.
 - Built Python and SQL checks for join integrity, record grain, status counts and plan-period denominators.
@@ -49,21 +67,15 @@ The current six-page report uses the established dark-purple design, business-fi
 - Developed report views and DAX measures, with dated reconciliation receipts for the versioned service model.
 - Extended the local report with network, experience, cancellation and forecasting demonstrations while keeping simulated results separate from snapshot observations.
 
-## Verified findings and interpretation
+## Challenges and lessons
 
-| Finding | Meaning |
+| Challenge | Approach and lesson |
 |---|---|
-| 1,280 service records; 1,193 normalized label groups | Records and grouped labels have different grains; groups are not verified unique people. |
-| 1,210 active services (94.53%); 41 partial-active; 29 inactive | The assumed status mapping identifies 70 records for review. Inactivity is not historical churn. |
-| 58 records with unspecified plan periods | Listed fees cannot all be treated as monthly recurring revenue. |
-| 1,280 exact activation dates withheld | Public analysis does not infer original tenure or activation cohorts. |
-| 12 source-address groups | These are not a verified inventory of physical OLT devices. |
+| Service rows and customer labels have different grains | Keep service counts separate from normalized label groups; neither is a verified count of people. |
+| Activation dates and plan periods are unreliable or sensitive | Withhold exact dates and retain unknown plan periods rather than invent tenure or monthly revenue. |
+| Operational network history is unavailable | Separate simulated metrics and external benchmarks from snapshot findings. |
 
-The current report displays 31.6% daily utilization, 43.0% peak-hour congestion, 99.77% availability, 1,068 complaints and 22 cancellations **within its generated scenario**. Its 3,150-customer churn benchmark is a separate population. These figures do not establish actual ISP congestion, churn prediction accuracy or realized business improvements.
-
-Monthly active/partial listed fee exposure is 2,956,272 undisclosed units across monthly plans. It is neither recognized revenue nor verified MRR. Earlier source reconciliation found 1,275 changed prepared activation dates and 810 dates beyond the assumed reference date; historical flags are retained. See the [plan-period and source documentation](docs/source_workbook_review.md).
-
-## Data, model and repository contents
+## Data and project structure
 
 The public pipeline begins with sanitized, frozen inputs derived from an author-supplied confidential service extract. It does not reproduce the private extraction. Status mappings and the reference date of 12 September 2026 are analytical assumptions. Sequential identifiers cannot safely join independently generated future extracts.
 
@@ -78,7 +90,7 @@ The public pipeline begins with sanitized, frozen inputs derived from an author-
 
 **Delivery scope:** the six-page report shown above is a local portfolio deliverable. The repository's editable Power BI source and commands below reproduce the service-status model. The newer report's PBIX, scenario pipeline and external inputs are not included in this public checkout.
 
-## Run and validate the public model
+## Run and validate
 
 From the repository root, install the requirements in a virtual environment:
 
